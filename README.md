@@ -32,7 +32,7 @@ CChat:
  > Allows CGroup to function
 
 
-## Functions
+### Functions
 
 
 
