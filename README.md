@@ -66,6 +66,7 @@ Commands
 >>> Transfer ownership of a group you own
 >> `/cgroup group info <alias`
 >>> Find primary info of group (owner, members, invites)
+
 > `/cgroup invite` - The command for managing invites
 >> `/cgroup invite send <alias> <invitee>`  
 >>> Send an invite to a player to join a group you own
@@ -73,6 +74,7 @@ Commands
 >>> Revoke an invite sent to a player from a group you own
 >> `/cgroup invite accept <alias>`  
 >>> Accept an invite sent to you from a group
+
 > `/cgroup channel <alias>` - Switch to speaking in a different group
 >> Alternative alias - /cch
 >> If the alias does not exist or `ALL`, you will be sent to global chat
