@@ -1,7 +1,3 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package plugin.CGroup;
 
 import org.bukkit.configuration.file.FileConfiguration;

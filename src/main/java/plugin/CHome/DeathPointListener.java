@@ -1,8 +1,5 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package plugin.CHome;
+
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
