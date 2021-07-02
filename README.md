@@ -1,7 +1,7 @@
 ## CX - A plugin bundle I made for my own use
 Just thought I might put it here in case anyone wanted. 
 
-## Content Summary:
+# Content Summary:
 CHome:
  > Teleportation system
  > 
@@ -36,7 +36,7 @@ CChat:
 
 
 
-## CHome
+# CHome
 Commands
 > `/chome home`
 >> Teleport to Home
@@ -55,7 +55,7 @@ Permissions
 >> Permission to use /chome death
 
 
-## CGroup
+# CGroup
 Commands
 > `/cgroup group`  
 > The main command for managing group chats
