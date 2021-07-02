@@ -1,7 +1,7 @@
 ## CX - A plugin bundle I made for my own use
 Just thought I might put it here in case anyone wanted. 
 
-## Contains:
+## Content Summary:
 CHome:
  > Teleportation system
  > 
@@ -30,6 +30,9 @@ CChat:
  > /print function
  > 
  > Allows CGroup to function
+
+
+## Functions
 
 
 
