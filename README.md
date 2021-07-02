@@ -46,11 +46,14 @@ Commands
 >> Teleport to last death location
 > `/chome help`
 >> Display command usages
+
 Permissions
 > `chome.home`
 >> Permission to use /chome home
+
 > `chome.sethome`
 >> Permission to use /chome sethome
+
 > `chome.death`
 >> Permission to use /chome death
 
@@ -92,6 +95,7 @@ Commands
 > `/cgroup help` - Command for info`
 >> /cgroup help channel|group|invite
 >>> Find usage information for each subcommand (same info as here)
+
 Permissions
 
 > `cgroup.use`
