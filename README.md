@@ -1,7 +1,7 @@
-##CX - A plugin bundle I made for my own use
+## CX - A plugin bundle I made for my own use
 Just thought I might put it here in case anyone wanted. 
 
-##Contains:
+## Contains:
 CHome:
  > Teleportation system
  > Teleport to home - Home is set by and unique to player, can be accessed from anywhere
