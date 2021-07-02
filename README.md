@@ -4,13 +4,20 @@ Just thought I might put it here in case anyone wanted.
 ## Contains:
 CHome:
  > Teleportation system
+ > 
  > Teleport to home - Home is set by and unique to player, can be accessed from anywhere
+ > 
  > Teleport to death - Teleports to last death point, single-use for each death
+ > 
  > Teleport to shop - Teleports to a common shopping district point, configurable by admin (Just did this for fun, might not be useful)
+
 CGroup:
  > Group chat system
+ > 
  > Useful for communicating with team members (etc) without cluttering the global chat or just for private information
+ >
  > Allows creation and management of different groups, in which members can message other members
+ > 
  > Group owner (creator or otherwise), can invite, kick (etc) other players
 CChat:
  > Simple aesthetics for the chat
