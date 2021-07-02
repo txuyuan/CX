@@ -56,31 +56,40 @@ Permissions
 Commands
 > `/cgroup group`  
 > The main command for managing group chats
+
 >> `/cgroup group create <name> <alias> <colour>`  
 >>> Create a new group
+
 >> `/cgroup disband <alias>`  
 >>> Disband a group you own
+
 >> `/cgroup group remove <alias> <member>`  
 >>> Remove a member from a group you own
+
 >> `/cgroup group transfer <alias> <member>`  
 >>> Transfer ownership of a group you own
+
 >> `/cgroup group info <alias`
 >>> Find primary info of group (owner, members, invites)
 
 > `/cgroup invite` - The command for managing invites
 >> `/cgroup invite send <alias> <invitee>`  
 >>> Send an invite to a player to join a group you own
+
 >> `/cgroup invite revoke <alias> <invitee>`  
 >>> Revoke an invite sent to a player from a group you own
+
 >> `/cgroup invite accept <alias>`  
 >>> Accept an invite sent to you from a group
 
 > `/cgroup channel <alias>` - Switch to speaking in a different group
 >> Alternative alias - /cch
 >> If the alias does not exist or `ALL`, you will be sent to global chat
+
 > `/cgroup help` - Command for info`
 >> /cgroup help channel|group|invite
 >>> Find usage information for each subcommand (same info as here)
 Permissions
+
 > `cgroup.use`
 >> Permission to use CGroup
