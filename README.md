@@ -19,11 +19,16 @@ CGroup:
  > Allows creation and management of different groups, in which members can message other members
  > 
  > Group owner (creator or otherwise), can invite, kick (etc) other players
+
 CChat:
  > Simple aesthetics for the chat
+ > 
  > Join/leave message
+ > 
  > Different aesthetic for /say - Makes it nicer when you talk from console
+ > 
  > /print function
+ > 
  > Allows CGroup to function
 
 
