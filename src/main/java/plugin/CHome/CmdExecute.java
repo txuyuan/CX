@@ -14,9 +14,21 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import org.bukkit.entity.Player;
 
-public class CmdExecute
-{
-	
+public class CmdExecute {
+
+    private static void save(FileConfiguration d, File dFile, Player p){
+        try {
+            d.save(dFile);
+        }
+        catch (IOException exception) {
+            System.out.println("§c(Error)§f §cError writing to disk");
+            p.sendMessage("§c(Error)§f Error writing to disk");
+            exception.printStackTrace();
+        }
+    }
+
+
+
 	static String setshop(Player p) {
         if (!p.hasPermission("chome.setshop")) {
             System.out.println("§b(Status)§f §e" + p.getName() + "§fAttempted to set the shopping district without permissions");
@@ -26,14 +38,7 @@ public class CmdExecute
         File dFile = new File("./plugins/CX", "chomedata.yml");
         FileConfiguration d = (FileConfiguration)YamlConfiguration.loadConfiguration(dFile);
         d.set("shop", (Object)l);
-        try {
-            d.save(dFile);
-        }
-        catch (IOException exception) {
-            System.out.println("§c(Error)§f §cError writing to disk");
-            p.sendMessage("§c(Error)§f Error writing to disk");
-            exception.printStackTrace();
-        }
+        save(d, dFile, p);
         return "§b(Status)§f Successfully set shopping district";
     }
     
@@ -68,13 +73,7 @@ public class CmdExecute
         File dFile = new File("./plugins/CX", "chomedata.yml");
         FileConfiguration d = (FileConfiguration)YamlConfiguration.loadConfiguration(dFile);
         d.set(String.valueOf(String.valueOf(u)) + ".home", (Object)l);
-        try {
-            d.save(dFile);}
-        catch (IOException exception) {
-            System.out.println("§c(Error)§f §cError writing to disk");
-            p.sendMessage("§c(Error)§f Error writing to disk");
-            exception.printStackTrace();
-        }
+        save(d, dFile, p);
         return "§b(Status)§f Successfully set your home";
     }
     
@@ -107,13 +106,8 @@ public class CmdExecute
         FileConfiguration d = (FileConfiguration)YamlConfiguration.loadConfiguration(dFile);
         d.set(String.valueOf(String.valueOf(u)) + ".death", (Object)l);
         d.set(String.valueOf(String.valueOf(u)) + ".death-used", (Object)false);
-        try {
-            d.save(dFile);}
-        catch (IOException exception) {
-            System.out.println("CHOME | §fERROR§f >> §cError writing to disk");
-            e.getEntity().sendMessage("§c(Error)§f Error writing to disk");
-            exception.printStackTrace();
-        }
+        Player p = (Player)e2;
+        save(d, dFile, p);
     }
     
     static String death(Player p) {
