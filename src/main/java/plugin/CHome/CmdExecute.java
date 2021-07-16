@@ -1,5 +1,6 @@
 package plugin.CHome;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -12,6 +13,8 @@ import org.bukkit.Location;
 import java.io.IOException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
+import java.util.UUID;
+
 import org.bukkit.entity.Player;
 
 public class CmdExecute {
@@ -31,7 +34,7 @@ public class CmdExecute {
 
 	static String setshop(Player p) {
         if (!p.hasPermission("chome.setshop")) {
-            System.out.println("§b(Status)§f §e" + p.getName() + "§fAttempted to set the shopping district without permissions");
+            System.out.println("§b(Status)§f §e" + p.getName() + "§f Attempted to set the shopping district without permissions");
             return "§c(Error)§f You do not have permission to set the shopping district";
         }
         Location l = p.getLocation();
@@ -44,7 +47,7 @@ public class CmdExecute {
     
     static String shop(Player p) {
         if (!p.hasPermission("chome.shop")) {
-            System.out.println("§b(Status)§f §e" + p.getName() + "§fAtempted to teleport to the shopping district without permissions");
+            System.out.println("§b(Status)§f §e" + p.getName() + "§f Atempted to teleport to the shopping district without permissions");
             return "§c(Error)§f You do not have permission to teleport to the shopping district";
         }
         File dFile = new File("./plugins/CX", "chomedata.yml");
@@ -65,7 +68,7 @@ public class CmdExecute {
 	
     static String sethome(Player p) {
         if (!p.hasPermission("chome.sethome")) {
-            System.out.println("§b(Status)§f §e" + p.getName() + "§fAttempted to set home without permission");
+            System.out.println("§b(Status)§f §e" + p.getName() + "§f Attempted to set home without permission");
             return "§c(Error)§f You do not have permission to set your home";
         }
         Location l = p.getLocation();
@@ -76,25 +79,46 @@ public class CmdExecute {
         save(d, dFile, p);
         return "§b(Status)§f Successfully set your home";
     }
-    
-    static String home(Player p) {
-        if (!p.hasPermission("chome.home")) {
-            System.out.println("§b(Status)§f §e" + p.getName() + "§fAttempted to teleport to home without permission");
-            return "§c(Error)§f You do not have permission to teleport to your home";
+
+    public static void home(Player player, String[] args){
+        if(player.hasPermission("chome.home.others")){
+            if(args.length>1){
+                OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
+                if(target!=null){
+                    Location l = getHome(target.getUniqueId());
+                    if(l!=null){
+                        player.teleport(l);
+                        player.sendMessage("§b(Status)§f Teleporting to " + target.getName() + "'s home...");
+                    }else player.sendMessage("§b(Status)§f " + target.getName() + " does not have a set home");
+                }
+            }else{
+                Location l = getHome(player.getUniqueId());
+                if(l!=null){
+                    player.teleport(l);
+                    player.sendMessage("§b(Status)§f Teleporting to your home...");
+                }else player.sendMessage("§b(Status)§f You do not have a set home");
+            }
+        }else{
+            if (!player.hasPermission("chome.home")) {
+                System.out.println("§b(Status) §e" + player.getName() + "§f Attempted to teleport to home without permission");
+                player.sendMessage("§c(Error)§f You do not have permission to teleport to your home");
+            }
+            Location loc = getHome(player.getUniqueId());
+            if (loc != null) {
+                new BukkitRunnable() {
+                    public void run() { player.teleport(loc); }
+                }.runTaskLater(Main.getInstance(), 60);
+                player.sendMessage("§b(Status)§f Teleporting to your home...");
+            }
+            else player.sendMessage("§b(Status)§f You do not have a set home");
         }
-        String u = p.getUniqueId().toString();
+    }
+
+    private static Location getHome(UUID uuid){
         File dFile = new File("./plugins/CX", "chomedata.yml");
         FileConfiguration d = (FileConfiguration)YamlConfiguration.loadConfiguration(dFile);
-        Location l = d.getLocation(String.valueOf(String.valueOf(u)) + ".home");
-        if (l != null) {
-        	new BukkitRunnable() {
-        		public void run() {
-        			p.teleport(l);
-        		}
-        	}.runTaskLater(Main.getInstance(), 60);
-        	return "§b(Status)§f Teleporting to your home...";
-        }
-        return "§c(Error)§f Your home is not set";
+        Location l = d.getLocation(String.valueOf(String.valueOf(uuid.toString())) + ".home");
+        return l;
     }
     
     static void setDeath(PlayerDeathEvent e) {
