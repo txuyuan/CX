@@ -1,5 +1,6 @@
 package plugin.CChat;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.EventHandler;
@@ -67,25 +68,41 @@ public class ChatFormatListener implements Listener
             }
         }
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
-        event.setFormat(String.valueOf(channel) + "§f | §a%s§f >> %s");
+        event.setFormat(String.valueOf(channel) + "§f | " + ChatColor.translateAlternateColorCodes('&', getLife(event.getPlayer())) + "%s§f >> %s");
     }
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        System.out.println(String.valueOf(player.getName()) + "logged in at" + player.getLocation());
-        event.setJoinMessage("§a(Join)§f " + player.getDisplayName() + "§a joined the game");
+        System.out.println(String.valueOf(player.getDisplayName()) + "logged in at" + player.getLocation());
+        event.setJoinMessage("§a(Join) " + ChatColor.translateAlternateColorCodes('&', getLife(player)) + player.getDisplayName() + "§f joined the game");
         notifs(event, player);
     }
     
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        System.out.println(String.valueOf(player.getName()) + "logged out at" + player.getLocation());
-        event.setQuitMessage("§a(Leave)§f " + player.getDisplayName() + "§a left the game");
+        System.out.println(String.valueOf(player.getDisplayName()) + "logged out at" + player.getLocation());
+        event.setQuitMessage("§a(Leave) " + ChatColor.translateAlternateColorCodes('&', getLife(player)) + player.getDisplayName() + "§f left the game");
     }
     
-    
+    private String getLife(Player player){
+        File dataFile = new File(Bukkit.getPluginManager().getPlugin("ThirdLife").getDataFolder(), "lives.yml");
+        FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+        int lives = data.getInt(player.getUniqueId().toString());
+        switch(lives){
+            case 1:
+                return "&c";
+            case 2:
+                return "&e";
+            case 3:
+                return "&a";
+            default:
+                return "&a";
+        }
+    }
+
+
     
     private static void notifs(PlayerJoinEvent event, Player player) {
     	
