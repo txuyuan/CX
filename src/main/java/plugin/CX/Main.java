@@ -8,7 +8,6 @@ import plugin.CGroup.CGroupCmdParse;
 import plugin.CGroup.CchCompleter;
 import plugin.CGroup.CchParse;
 import plugin.CChat.ChatFormatListener;
-import plugin.CChat.PrintCommandExecutor;
 import plugin.CChat.SayExec;
 
 import org.bukkit.plugin.Plugin;
@@ -28,7 +27,6 @@ import plugin.CHome.CmdParse;
 import org.bukkit.plugin.java.JavaPlugin;
 import plugin.CMenu.CMenuExec;
 import plugin.CMenu.MenuListListener;
-import sun.lwawt.macosx.CMenu;
 
 public class Main extends JavaPlugin
 {
@@ -51,6 +49,8 @@ public class Main extends JavaPlugin
 
         this.getCommand("cmenu").setExecutor((CommandExecutor)new CMenuExec());
         this.getServer().getPluginManager().registerEvents((Listener)new MenuListListener(), (Plugin)this);
+
+        this.getServer().getPluginManager().registerEvents((Listener)new SpectatorTPListener(), (Plugin)this);
         
         Bukkit.addRecipe(getRecipe());
         
@@ -62,6 +62,8 @@ public class Main extends JavaPlugin
     public void onDisable() {
         HandlerList.unregisterAll((Listener)new DeathPointListener());
         HandlerList.unregisterAll((Listener)new ChatFormatListener());
+        HandlerList.unregisterAll((Listener)new MenuListListener());
+        HandlerList.unregisterAll((Listener)new SpectatorTPListener());
         System.out.println("CX | §aSTATUS§f >> §9Plugin successfully disabled");
     }
     

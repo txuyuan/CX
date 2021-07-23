@@ -36,3 +36,6 @@ permissions:
   cmenu.admin:
     description: Allows player to operate CMenu
     default: op
+  cx.allowSpecTp:
+    desription: Allows player to teleport using spectator functions
+    default: op
