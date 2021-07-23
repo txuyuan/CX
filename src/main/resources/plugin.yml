@@ -1,6 +1,6 @@
 main: plugin.CX.Main
 name: CX
-version: 2.4.0
+version: 2.5.0
 author: Xuyuan
 api-version: 1.17
 commands:
@@ -15,6 +15,8 @@ commands:
   say:
     description: Say message in chat. Usage | /say <message>
     alias: s
+  cmenu:
+    description: Op command to operate CMenu
 permissions:
   chome.home:
     description: Allows player to teleport to home (chome home)
@@ -31,3 +33,6 @@ permissions:
   cgroup.use:
     description: Allows a player to use CGroup functionality
     default: true
+  cmenu.admin:
+    description: Allows player to operate CMenu
+    default: op
