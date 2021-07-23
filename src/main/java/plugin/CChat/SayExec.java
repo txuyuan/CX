@@ -27,7 +27,7 @@ public class SayExec implements CommandExecutor{
 		}else {
 			if (args[0].equalsIgnoreCase("p"))
 				message = message.substring(2);
-			Bukkit.broadcastMessage("(§bConsole§f) " + message);
+			Bukkit.broadcastMessage("§f(§bConsole§f) " + message);
 			return true;
 		}
 		

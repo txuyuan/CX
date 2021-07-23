@@ -26,6 +26,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
 import plugin.CHome.CmdParse;
 import org.bukkit.plugin.java.JavaPlugin;
+import plugin.CMenu.CMenuExec;
+import plugin.CMenu.MenuListListener;
+import sun.lwawt.macosx.CMenu;
 
 public class Main extends JavaPlugin
 {
@@ -45,6 +48,9 @@ public class Main extends JavaPlugin
         this.getCommand("cch").setExecutor((CommandExecutor)new CchParse());
         this.getCommand("cch").setTabCompleter((TabCompleter)new CchCompleter());
         ConfigurationSerialization.registerClass((Class)Group.class, "Group");
+
+        this.getCommand("cmenu").setExecutor((CommandExecutor)new CMenuExec());
+        this.getServer().getPluginManager().registerEvents((Listener)new MenuListListener(), (Plugin)this);
         
         Bukkit.addRecipe(getRecipe());
         
