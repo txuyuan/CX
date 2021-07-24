@@ -15,7 +15,6 @@ plugin/CHome/DeathPointListener.class
 plugin/CX/Main.class
 plugin/CGroup/CchParse.class
 plugin/CHome/CmdExecute$1.class
-plugin/CX/SpectatorTPListener.class
 plugin/CMenu/CMenuExec.class
 plugin/CChat/SayExec.class
 plugin/CChat/ChatFormatListener.class
