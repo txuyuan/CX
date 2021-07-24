@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import plugin.Data.PluginFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CMenuExec implements CommandExecutor {
@@ -18,12 +19,12 @@ public class CMenuExec implements CommandExecutor {
             sender.sendMessage("§c(Error)§f You do not have permission to use this");
             return true;
         }
-        if(args.length < 0){
+        if(args.length == 0){
             sender.sendMessage("§c(Error)§f No arguments specified");
             return true;
         }
 
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[0]);
         if(offlinePlayer == null){
             sender.sendMessage("§c(Error)§7 " + args[1] + "§f is not a recognised player");
             return true;
@@ -36,16 +37,18 @@ public class CMenuExec implements CommandExecutor {
         String playerId = offlinePlayer.getUniqueId().toString();
         FileConfiguration fConfig = PluginFile.getFile("cMenuFile");
         List<String> playerList = (List<String>)fConfig.getList("players");
+        if(playerList==null)
+            playerList = new ArrayList<>();
         if(playerList.contains(playerId)){
             playerList.remove(playerId);
             fConfig.set("players", playerList);
             PluginFile.save(fConfig, "cMenuFile");
-            sender.sendMessage("§b(Status)§7 " + args[1] + "§f is now hidden on the menu list");
+            sender.sendMessage("§b(Status)§7 " + args[0] + "§f is now shown on the menu list");
         }else{
             playerList.add(playerId);
             fConfig.set("players", playerList);
             PluginFile.save(fConfig, "cMenuFile");
-            sender.sendMessage("§b(Status)§7 " + args[1] + "§f is now shown on the menu list");
+            sender.sendMessage("§b(Status)§7 " + args[0] + "§f is now hidden on the menu list");
         }
         return true;
     }

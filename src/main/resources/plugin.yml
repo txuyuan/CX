@@ -33,6 +33,9 @@ permissions:
   cgroup.use:
     description: Allows a player to use CGroup functionality
     default: true
-  cmenu.admin:
+  cmenu.use:
     description: Allows player to operate CMenu
+    default: op
+  cx.allowSpecTp:
+    desription: Allows player to teleport using spectator functions
     default: op
