@@ -49,8 +49,6 @@ public class Main extends JavaPlugin
 
         this.getCommand("cmenu").setExecutor((CommandExecutor)new CMenuExec());
         this.getServer().getPluginManager().registerEvents((Listener)new MenuListListener(), (Plugin)this);
-
-        this.getServer().getPluginManager().registerEvents((Listener)new SpectatorTPListener(), (Plugin)this);
         
         Bukkit.addRecipe(getRecipe());
         
@@ -63,7 +61,6 @@ public class Main extends JavaPlugin
         HandlerList.unregisterAll((Listener)new DeathPointListener());
         HandlerList.unregisterAll((Listener)new ChatFormatListener());
         HandlerList.unregisterAll((Listener)new MenuListListener());
-        HandlerList.unregisterAll((Listener)new SpectatorTPListener());
         System.out.println("CX | §aSTATUS§f >> §9Plugin successfully disabled");
     }
     

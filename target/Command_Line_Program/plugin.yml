@@ -1,6 +1,6 @@
 main: plugin.CX.Main
 name: CX
-version: 2.5.0
+version: 2.5.1
 author: Xuyuan
 api-version: 1.17
 commands:
@@ -33,7 +33,7 @@ permissions:
   cgroup.use:
     description: Allows a player to use CGroup functionality
     default: true
-  cmenu.admin:
+  cmenu.use:
     description: Allows player to operate CMenu
     default: op
   cx.allowSpecTp:

@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.xuyuan</groupId>
-    <artifactId>CX</artifactId>
-    <version>2.5.0</version>
+    <artifactId>CX-3rdLife</artifactId>
+    <version>2.5.1</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
