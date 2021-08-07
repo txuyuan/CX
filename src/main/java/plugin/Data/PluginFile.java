@@ -6,6 +6,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
+import plugin.CX.Main;
+import java.util.logging.Level;
+
 public class PluginFile{
 
     public static FileConfiguration getFile(String name){
@@ -20,7 +23,7 @@ public class PluginFile{
             fConfig.save(file);
         }
         catch (IOException exception) {
-            System.out.println("§c(Error)§f §cError writing to disk");
+            Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f §cError writing to disk");
             exception.printStackTrace();
         }
     }

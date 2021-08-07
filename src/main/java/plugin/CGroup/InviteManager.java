@@ -8,6 +8,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import plugin.CX.Main;
+import java.util.logging.Level;
 
 public class InviteManager
 {
@@ -47,7 +49,7 @@ public class InviteManager
                     return "§c(Error)§f You are not the owner of " + group.getFormattedName();
                 String invitedPlayerName = args[3];
                 
-                System.out.println(invitedPlayerName);
+                Main.getInstance().getLogger().log(Level.INFO, invitedPlayerName);
                 
                 switch (group.sendInvite(invitedPlayerName)) {
                     case 1: 
@@ -66,7 +68,7 @@ public class InviteManager
                             data.save(dataFile);}
                         catch (IOException exception) {
                             exception.printStackTrace();
-                            System.out.println("§c(Error)§f Failed to write to disk");
+                            Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                             return "§c(Error)§f Failed to write to disk";
                         }
                         return "§b(Status)§f You sent an invite to " + group.getFormattedName() + " to §e" + invitedPlayerName;
@@ -101,7 +103,7 @@ public class InviteManager
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    System.out.println("§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 return "§b(Status)§f Revoked §e" + revokedPlayerName + "'s to " + group.getFormattedName();
@@ -128,7 +130,7 @@ public class InviteManager
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    System.out.println("§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 return "§b(Status)§f Accepted your invite to " + group.getFormattedName();
@@ -155,7 +157,7 @@ public class InviteManager
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    System.out.println("§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 return "§b(Status)§f Rejected your invite to " + group.getFormattedName();
