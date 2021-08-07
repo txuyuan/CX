@@ -30,7 +30,7 @@ import plugin.CMenu.MenuListListener;
 
 public class Main extends JavaPlugin
 {
-	static Main plugin;
+	private static Main plugin;
 	
     public void onEnable() {
         this.getDataFolder().mkdir();

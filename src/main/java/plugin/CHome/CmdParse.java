@@ -6,38 +6,41 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
 
-public class CmdParse implements CommandExecutor
-{
+public class CmdParse implements CommandExecutor {
+
     public boolean onCommand(CommandSender s, Command c, String label, String[] a) {
         if (s instanceof Player) {
-            final Player p = (Player)s;
-            if (a.length < 1) 
-                s.sendMessage("§c(Error)§f No arguments specified");
-            else if (a[0].equals("sethome"))
-                s.sendMessage(CmdExecute.sethome(p));
-            else if (a[0].equals("home")) 
-                CmdExecute.home(p, a);
-            else if (a[0].equals("death")) 
-                s.sendMessage(CmdExecute.death(p));
-            else if (a[0].equals("setshop"))
-            	s.sendMessage(CmdExecute.setshop(p));
-            else if (a[0].equals("shop"))
-            	s.sendMessage(CmdExecute.shop(p));
-            else if (a[0].equals("help")) {
-                if(p.isOp()) s.sendMessage("§e(Help)§f §e§lCHOME V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "§f"
-                            + "\n§e(Help)§f §7/chome sethome §f: Set your home§f"
-                            + "\n§e(Help)§f §7/chome home <target>§f: Teleport to target's home (leave blank for own home)§f"
-                            + "\n§e(Help)§f §7/chome death §f: Teleport to your last death location§f"
-                            + "\n§e(Help)§f §7/chome help §f: Show this help message§f");
-                else s.sendMessage("§e(Help)§f §e§lCHOME V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "§f"
-                		+ "\n§e(Help)§f §7/chome sethome §f: Set your home§f"
-                		+ "\n§e(Help)§f §7/chome home §f: Teleport to your home§f"
-                		+ "\n§e(Help)§f §7/chome death §f: Teleport to your last death location§f"
-                		+ "\n§e(Help)§f §7/chome help §f: Show this help message§f");
-            }
-            else s.sendMessage("§c(Error) §fUnrecognised argument");
+            s.sendMessage("§c(Error)§f You must be a player to use CHome");
+            return true;
         }
-        else s.sendMessage("§c(Error)§f You must be a player to use CHome");
+        final Player p = (Player)s;
+        if (a.length < 1)
+            s.sendMessage("§c(Error)§f No arguments specified");
+        else if (a[0].equals("sethome"))
+            s.sendMessage(CmdExecute.sethome(p));
+        else if (a[0].equals("home"))
+            CmdExecute.home(p, a);
+        else if (a[0].equals("death"))
+            s.sendMessage(CmdExecute.death(p));
+        else if (a[0].equals("setshop"))
+            s.sendMessage(CmdExecute.setshop(p));
+        else if (a[0].equals("shop"))
+            s.sendMessage(CmdExecute.shop(p));
+        else if (a[0].equals("help")) {
+            if(p.isOp()) s.sendMessage("§e(Help)§f §e§lCHOME V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "§f"
+                    + "\n§e(Help)§f §7/chome sethome §f: Set your home§f"
+                    + "\n§e(Help)§f §7/chome home <target>§f: Teleport to target's home (leave blank for own home)§f"
+                    + "\n§e(Help)§f §7/chome death §f: Teleport to your last death location§f"
+                    + "\n§e(Help)§f §7/chome shop §f: Teleport to shopping district"
+                    + "\n§e(Help)§f §7/chome help §f: Show this help message§f");
+            else s.sendMessage("§e(Help)§f §e§lCHOME V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "§f"
+                    + "\n§e(Help)§f §7/chome sethome §f: Set your home§f"
+                    + "\n§e(Help)§f §7/chome home §f: Teleport to your home§f"
+                    + "\n§e(Help)§f §7/chome death §f: Teleport to your last death location§f"
+                    + "\n§e(Help)§f §7/chome shop §f: Teleport to shopping district"
+                    + "\n§e(Help)§f §7/chome help §f: Show this help message§f");
+        }
+        else s.sendMessage("§c(Error) §fUnrecognised argument");
         return true;
     }
 }
