@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.UUID;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.Listener;
+import plugin.CX.Main;
 
 public class ChatFormatListener implements Listener
 {
@@ -40,7 +43,7 @@ public class ChatFormatListener implements Listener
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    System.out.println("§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                     event.getPlayer().sendMessage("§c(Error)§f Failed to write to disk");
                 }
                 event.getPlayer().sendMessage("§9(Info)§f The channel you were in was deleted\n§b(Status)§f Now messaging in §eGlobal");
@@ -54,7 +57,7 @@ public class ChatFormatListener implements Listener
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    System.out.println("§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                     event.getPlayer().sendMessage("§c(Error)§f Failed to write to disk");
                 }
                 event.getPlayer().sendMessage("§9(Info)§f The channel you were in was deleted, or you were removed\n§b(Status)§f Now messaging in §eGlobal");
@@ -74,7 +77,7 @@ public class ChatFormatListener implements Listener
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        System.out.println(String.valueOf(player.getDisplayName()) + "logged in at" + player.getLocation());
+        Main.getInstance().getLogger().log(Level.INFO, String.valueOf(player.getDisplayName()) + " logged in at" + player.getLocation());
         event.setJoinMessage("§a(Join) " + ChatColor.translateAlternateColorCodes('&', getLife(player)) + player.getDisplayName() + "§f joined the game");
         notifs(event, player);
     }
@@ -82,7 +85,7 @@ public class ChatFormatListener implements Listener
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        System.out.println(String.valueOf(player.getDisplayName()) + "logged out at" + player.getLocation());
+        Main.getInstance().getLogger().log(Level.INFO, String.valueOf(player.getDisplayName()) + " logged out at" + player.getLocation());
         event.setQuitMessage("§a(Leave) " + ChatColor.translateAlternateColorCodes('&', getLife(player)) + player.getDisplayName() + "§f left the game");
     }
     
@@ -130,7 +133,7 @@ public class ChatFormatListener implements Listener
                 data.save(dataFile);}
             catch (IOException exception) {
                 exception.printStackTrace();
-                System.out.println("§c(Error)§f Failed to write to disk");}
+                Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");}
         }
         
         if (data.getList("players." + player.getUniqueId().toString() + ".leaveList") != null){
@@ -138,7 +141,6 @@ public class ChatFormatListener implements Listener
         	List<String> leavList = (List<String>)data.getList("players." + player.getUniqueId().toString() + ".leaveList");
         	for (String leav : leavList) {
         		List<String> leavs = Arrays.asList(leav.split("`"));
-        		System.out.println(leavs);
         		player.sendMessage("§e(Info)§f Player §e" + leavs.get(0) + "§f left the group §e" + leavs.get(1));
         	}
         	data.set(search, null);
@@ -146,7 +148,7 @@ public class ChatFormatListener implements Listener
                 data.save(dataFile);}
             catch (IOException exception) {
                 exception.printStackTrace();
-                System.out.println("§c(Error)§f Failed to write to disk");}
+                Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");}
         }
         
         if (data.getList("players." + player.getUniqueId().toString() + ".transList") != null){
@@ -161,7 +163,7 @@ public class ChatFormatListener implements Listener
                 data.save(dataFile);}
             catch (IOException exception) {
                 exception.printStackTrace();
-                System.out.println("§c(Error)§f Failed to write to disk");}
+                Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");}
         }
     	
     }

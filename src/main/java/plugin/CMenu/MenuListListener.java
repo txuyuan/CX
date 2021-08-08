@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import plugin.CX.Main;
+import java.util.logging.Level;
 
 public class MenuListListener implements Listener {
 
@@ -30,7 +32,7 @@ public class MenuListListener implements Listener {
             if(pList.contains(player)) it.remove();
         }
 
-        System.out.println("§7(CMenu) Ping from " + event.getAddress());
+        Main.getInstance().getLogger().log(Level.INFO, "§7(CMenu) Ping from " + event.getAddress());
     }
 
 }

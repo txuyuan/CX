@@ -13,13 +13,15 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import plugin.CX.Main;
+import java.util.logging.Level;
 
 public class Completer implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		List<String> completions;
 		
 		if (!command.getName().equalsIgnoreCase("cgroup") || !(sender instanceof Player)) {
-			System.out.println("test 1");
+			Main.getInstance().getLogger().log(Level.INFO, "test 1");
 			return Arrays.asList("");
 		}
 		

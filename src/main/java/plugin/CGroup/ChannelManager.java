@@ -4,8 +4,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.IOException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
+import java.util.logging.Level;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import plugin.CX.Main;
 
 public class ChannelManager
 {
@@ -24,7 +27,7 @@ public class ChannelManager
                 }
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    System.out.println("§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 Group group = Group.getGroup(channel, data);
@@ -38,7 +41,7 @@ public class ChannelManager
                         data.save(dataFile);}
                     catch (IOException exception2) {
                         exception2.printStackTrace();
-                        System.out.println("§c(Error)§f Failed to write to disk");
+                        Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                         return "§c(Error)§f Failed to write to disk";
                     }
                     return "§b(Status)§f Now messaging in " + group.getFormattedName();

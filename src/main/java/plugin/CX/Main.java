@@ -28,9 +28,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import plugin.CMenu.CMenuExec;
 import plugin.CMenu.MenuListListener;
 
+import java.util.logging.Level;
+
 public class Main extends JavaPlugin
 {
-	static Main plugin;
+	private static Main plugin;
 	
     public void onEnable() {
         this.getDataFolder().mkdir();
@@ -53,7 +55,8 @@ public class Main extends JavaPlugin
         Bukkit.addRecipe(getRecipe());
         
         plugin = this;
-        
+
+        this.getLogger().log(Level.INFO, "");
         System.out.println("CX | §aSTATUS§f >> §9Plugin successfully enabled");
     }
     

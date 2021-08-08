@@ -2,6 +2,7 @@ package plugin.CGroup;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -10,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import plugin.CX.Main;
 
 public class CchParse implements CommandExecutor{
 	
@@ -38,7 +40,7 @@ public class CchParse implements CommandExecutor{
             }
             catch (IOException exception) {
                 exception.printStackTrace();
-                System.out.println("§c(Error)§f Failed to write to disk");
+                Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                 player.sendMessage("§c(Error)§f Failed to write to disk");
                 return true;
             }
@@ -57,7 +59,7 @@ public class CchParse implements CommandExecutor{
                     data.save(dataFile);}
                 catch (IOException exception2) {
                     exception2.printStackTrace();
-                    System.out.println("§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
                     player.sendMessage("§c(Error)§f Failed to write to disk");
                     return true;
                 }
