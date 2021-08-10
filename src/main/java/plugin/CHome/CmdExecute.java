@@ -56,20 +56,20 @@ public class CmdExecute {
         File dFile = new File("./plugins/CX", "chomedata.yml");
         FileConfiguration d = YamlConfiguration.loadConfiguration(dFile);
         Location l = d.getLocation("shop");
-        if (p.getWorld() != Bukkit.getWorlds().get(0)) 
-        	return "§c(Error)§f You cannot teleport to the shop while not in the overworld";
         if(l == null)
             return "§c(Error)§f The shopping district is not set";
-        if (!p.hasPermission("chome.admin")) {
-        	new BukkitRunnable() {
-        		public void run() {
-        			p.teleport(l);
-        		}
-        	}.runTaskLater(Main.getInstance(), 60);
-            return "§b(Status)§f Teleporting to shopping district...";
+        if(p.hasPermission("chome.admin")){
+            p.teleport(l);
+            return "§b(Status)§f Teleporting to shopping district";
         }
-        p.teleport(l);
-        return "§b(Status)§f Teleporting to shopping district";
+        if (p.getWorld() != Bukkit.getWorlds().get(0))
+            return "§c(Error)§f You cannot teleport to the shop while not in the overworld";
+        new BukkitRunnable() {
+            public void run() {
+                p.teleport(l);
+            }
+        }.runTaskLater(Main.getInstance(), 60);
+        return "§b(Status)§f Teleporting to shopping district...";
     }
 	
     static String sethome(Player p) {
