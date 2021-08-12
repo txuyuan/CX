@@ -1,0 +1,43 @@
+main: plugin.CX.Main
+name: CX
+version: 2.5.2
+author: Xuyuan
+api-version: 1.17
+commands:
+  chome:
+    description: CHome for homes, death and shop
+    alias: ch
+  cgroup:
+    description: CGroup for group chats and private communication
+    aliases: [cgrp, cg]
+  cch:
+    description: Shortcut for /cgroup channel
+  say:
+    description: Say message in chat. Usage | /say <message>
+    alias: s
+  cmenu:
+    description: Op command to operate CMenu
+permissions:
+  chome.home:
+    description: Allows player to teleport to home (chome home)
+    default: true
+  chome.sethome:
+    description: Allows player to set their home (chome sethome)
+    default: true
+  chome.death:
+    description: Allows player to teleport to previous death point (chome death)
+    default: true
+  chome.shop:
+    description: Allows player to teleport to shopping district
+    default: true
+  chome.admin:
+    description: Allows player to set shopping district location, teleport to shop from all dimensions, teleport to other people's homes
+  cgroup.use:
+    description: Allows a player to use CGroup functionality
+    default: true
+  cmenu.use:
+    description: Allows player to operate CMenu
+    default: op
+  cx.allowSpecTp:
+    desription: Allows player to teleport using spectator functions
+    default: op
