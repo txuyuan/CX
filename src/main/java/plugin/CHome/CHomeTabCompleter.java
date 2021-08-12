@@ -18,6 +18,7 @@ public class CHomeTabCompleter implements TabCompleter
             defList.add("death");
             defList.add("home");
             defList.add("sethome");
+            defList.add("shop");
             for (final String str : defList) 
                 if (str.indexOf(a[0]) == 0) 
                     rList.add(str);
