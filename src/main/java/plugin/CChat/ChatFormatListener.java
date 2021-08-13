@@ -71,7 +71,7 @@ public class ChatFormatListener implements Listener
             }
         }
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
-        event.setFormat(channel + "§f | §a%s§f >> %s");
+        event.setFormat("(" + channel + "§f | §a%s§f) %s");
     }
     
     @EventHandler
