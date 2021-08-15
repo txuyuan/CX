@@ -5,11 +5,11 @@ Just thought I might put it here in case anyone wanted.
 CHome:
  > Teleportation system
  > 
- > Teleport to home - Home is set by and unique to player, can be accessed from anywhere
+ > Teleport to home - Home is set by and unique to player (using /chome sethome), can be accessed from anywhere
  > 
  > Teleport to death - Teleports to last death point, single-use for each death
  > 
- > Teleport to shop - Teleports to a common shopping district point, configurable by admin (Just did this for fun, might not be useful)
+ > Teleport to shop - Teleports to a common shopping district point, configurable by admin (using /chome /setshop) Only accessible by players if in Overworld. 
 
 CGroup:
  > Group chat system
