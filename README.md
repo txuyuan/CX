@@ -111,8 +111,9 @@ By default, CX blocks people from using the teleport function inbuilt into spect
 
 
 
+
 <br></br>
-## Licenses
+### Licenses
 Source code licensed under [GNU GPL v3.0](./LICENSE)
 
 Notes and documentation licensed under [GNU FDL v1.3](./LICENSE-Documents)
