@@ -8,6 +8,7 @@ A plugin bundle I made for my own use. Just thought I might put it here in case 
 * [CGroup](#cgroup)
 * [CChat](#cchat)
 * [CMenu](#cmenu)
+* [Miscallenous](#miscallenous)
 
 
 <br></br>
@@ -47,6 +48,7 @@ Teleportation system for player convenience. Uses 1 player-unique home location 
 Group chat system for communicating with friends/associates/team members privately without cluttering the global chat. Each group has an admin to control the group and its members
 
 ***Commands***
+
 `cgroup group` - Subcommand covering group administration
 * `create <name> <alias> <colour>` - Create a new group
 * `disband <alias>` - Disband a group
