@@ -63,7 +63,7 @@ Group chat system for communicating with friends/associates/team members private
 
 `cgroup channel <alias>` - Switch to speaking in a different group *(Alt alias: /cch)*
 
-`cgroup help` - Provides helpful information
+`cgroup help` - Provides helpful information (No further args to show general plugin info)
 * `channel | group | invite` - Usage info about each subcommand
 
 ***Permissions***
