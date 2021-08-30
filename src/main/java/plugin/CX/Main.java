@@ -58,7 +58,6 @@ public class Main extends JavaPlugin
         
         plugin = this;
 
-        this.getLogger().log(Level.INFO, "");
         System.out.println("CX | §aSTATUS§f >> §9Plugin successfully enabled");
     }
     

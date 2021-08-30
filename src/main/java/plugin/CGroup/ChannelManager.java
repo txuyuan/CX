@@ -27,7 +27,7 @@ public class ChannelManager
                 }
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 Group group = Group.getGroup(channel, data);
@@ -41,7 +41,7 @@ public class ChannelManager
                         data.save(dataFile);}
                     catch (IOException exception2) {
                         exception2.printStackTrace();
-                        Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                        Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                         return "§c(Error)§f Failed to write to disk";
                     }
                     return "§b(Status)§f Now messaging in " + group.getFormattedName();

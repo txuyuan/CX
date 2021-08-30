@@ -27,7 +27,7 @@ public class CmdExecute {
             d.save(dFile);
         }
         catch (IOException exception) {
-            Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f §cError writing to disk");
+            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f §cError writing to disk");
             p.sendMessage("§c(Error)§f Error writing to disk");
             exception.printStackTrace();
         }
@@ -37,7 +37,7 @@ public class CmdExecute {
 
 	static String setshop(Player p) {
         if (!p.hasPermission("chome.admin")) {
-            Main.getInstance().getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Attempted to set the shopping district without permissions");
+            Main.getInstance().getLogger().log(Level.WARNING, "§b(Status)§f §e" + p.getName() + "§f Attempted to set the shopping district without permissions");
             return "§c(Error)§f You do not have permission to set the shopping district";
         }
         Location l = p.getLocation();
@@ -50,7 +50,7 @@ public class CmdExecute {
     
     static String shop(Player p) {
         if (!p.hasPermission("chome.shop")) {
-            Main.getInstance().getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Atempted to teleport to the shopping district without permissions");
+            Main.getInstance().getLogger().log(Level.WARNING, "§b(Status)§f §e" + p.getName() + "§f Atempted to teleport to the shopping district without permissions");
             return "§c(Error)§f You do not have permission to teleport to the shopping district";
         }
         File dFile = new File("./plugins/CX", "chomedata.yml");
@@ -74,7 +74,7 @@ public class CmdExecute {
 	
     static String sethome(Player p) {
         if (!p.hasPermission("chome.sethome")) {
-            Main.getInstance().getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Attempted to set home without permission");
+            Main.getInstance().getLogger().log(Level.WARNING, "§b(Status)§f §e" + p.getName() + "§f Attempted to set home without permission");
             return "§c(Error)§f You do not have permission to set your home";
         }
         Location l = p.getLocation();
@@ -104,7 +104,7 @@ public class CmdExecute {
             }
         }else{
             if (!player.hasPermission("chome.home")) {
-                Main.getInstance().getLogger().log(Level.INFO, "§b(Status) §e" + player.getName() + "§f Attempted to teleport to home without permission");
+                Main.getInstance().getLogger().log(Level.WARNING, "§b(Status) §e" + player.getName() + "§f Attempted to teleport home without permission");
                 player.sendMessage("§c(Error)§f You do not have permission to teleport to your home");
             }
             Location loc = getHome(player.getUniqueId());
@@ -150,7 +150,7 @@ public class CmdExecute {
         d.set(u + ".death-used", true);
         save(d, dFile, p);
         if(!p.hasPermission("chome.death")){
-            Main.getInstance().getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§fAttempted to teleport to their last death point without permission");
+            Main.getInstance().getLogger().log(Level.WARNING, "§b(Status)§f §e" + p.getName() + "§fAttempted to teleport to their last death point without permission");
             return "§b(Status)§f You do not have permission to teleport to your last death point";
         }
         if (p.hasPermission("chome.admin")) {
