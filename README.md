@@ -1,5 +1,5 @@
 # CX
-A plugin bundle I made for my own use. Just thought I might put it here in case anyone wanted. 
+A plugin bundle I made for my own use. Just thought I might put it here in case anyone wanted. Keep in mind this is very much still in development and not ready for production servers. 
 
 > *All commands are provided without the preceding `/` that indicates a cmd*
 
@@ -45,7 +45,7 @@ Teleportation system for player convenience. Uses 1 player-unique home location 
 
 <br></br>
 ## CGroup
-Group chat system for communicating with friends/associates/team members privately without cluttering the global chat. Each group has an admin to control the group and its members
+Group chat system for communicating with friends/associates/team members privately without cluttering the global chat. Each group has an admin to control the group and its members. I have'nt gotten around to adding all the group-editing functions I would like, so if you (the admin) can just access the groupdata.yml in the CX folder and edit it manually. It's structure is quite self-explanatory (players are stored as UUIDs) and somewhat adequate until I get around to implementing the functions
 
 ***Commands***
 
