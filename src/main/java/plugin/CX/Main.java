@@ -30,8 +30,8 @@ import plugin.CMenu.MenuListListener;
 
 import java.util.logging.Level;
 
-public class Main extends JavaPlugin
-{
+public class Main extends JavaPlugin{
+
 	private static Main plugin;
 	
     public void onEnable() {
@@ -66,7 +66,7 @@ public class Main extends JavaPlugin
         HandlerList.unregisterAll((Listener)new ChatFormatListener());
         HandlerList.unregisterAll((Listener)new MenuListListener());
         HandlerList.unregisterAll((Listener)new SpectatorTPListener());
-        System.out.println("CX | §aSTATUS§f >> §9Plugin successfully disabled");
+        Main.getInstance().getLogger().log(Level.INFO,"CX | §aSTATUS§f >> §9Plugin successfully disabled")
     }
     
 	private ShapedRecipe getRecipe() {
