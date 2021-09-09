@@ -19,9 +19,9 @@ public class ChannelManager
             }
             case 2: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration)YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 String channel = args[1].toUpperCase();
-                data.set("players." + player.getUniqueId().toString() + ".channel", (Object)"ALL");
+                data.set("players." + player.getUniqueId().toString() + ".channel",  "ALL");
                 try {
                     data.save(dataFile);
                 }
@@ -36,7 +36,7 @@ public class ChannelManager
                 if (group == null) 
                     return "§c(Error)§f A group with alias §f§o" + channel + "§c does not exist" + "\n§b(Status)§f Now messaging in §eGlobal";
                 if (group.getMembers().contains(player.getUniqueId().toString()) || player.isOp()) {
-                    data.set("players." + player.getUniqueId().toString() + ".channel", (Object)channel);
+                    data.set("players." + player.getUniqueId().toString() + ".channel", channel);
                     try {
                         data.save(dataFile);}
                     catch (IOException exception2) {

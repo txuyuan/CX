@@ -11,6 +11,8 @@ import java.util.Set;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.UUID;
 import java.io.IOException;
@@ -20,13 +22,14 @@ import java.io.File;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.Listener;
+import plugin.CX.Main;
 
 public class ChatFormatListener implements Listener
 {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-        FileConfiguration data = (FileConfiguration)YamlConfiguration.loadConfiguration(dataFile);
+        FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
         String channelAlias = data.getString("players." + event.getPlayer().getUniqueId().toString() + ".channel", "ALL");
         String channel;
         if (channelAlias.equals("ALL"))
@@ -68,13 +71,13 @@ public class ChatFormatListener implements Listener
             }
         }
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
-        event.setFormat(String.valueOf(channel) + "§f | " + ChatColor.translateAlternateColorCodes('&', getLife(event.getPlayer())) + "%s§f >> %s");
+        event.setFormat(channel + "§f | " + ChatColor.translateAlternateColorCodes('&', getLife(event.getPlayer())) + "%s§f >> %s");
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Main.getPrinter().log(Level.INFO, player.getDisplayName()) + "logged in at" + player.getLocation());
+        Main.getPrinter().log(Level.INFO, player.getDisplayName() + " logger in at " + player.getLocation());
         event.setJoinMessage("§a(Join) " + ChatColor.translateAlternateColorCodes('&', getLife(player)) + player.getDisplayName() + "§f joined the game");
         notifs(event, player);
     }
@@ -82,13 +85,13 @@ public class ChatFormatListener implements Listener
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Main.getPrinter().log(Level.INFO, player.getDisplayName()) + "logged out at" + player.getLocation();
+        Main.getPrinter().log(Level.INFO, player.getDisplayName() + "logged out at" + player.getLocation());
         event.setQuitMessage("§a(Leave) " + ChatColor.translateAlternateColorCodes('&', getLife(player)) + player.getDisplayName() + "§f left the game");
     }
 
     private String getLife(Player player){
         File dataFile = new File(Bukkit.getPluginManager().getPlugin("ThirdLife").getDataFolder(), "lives.yml");
-        FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+        FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
         int lives = data.getInt(player.getUniqueId().toString());
         switch(lives){
             case 1:

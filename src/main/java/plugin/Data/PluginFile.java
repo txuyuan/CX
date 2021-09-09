@@ -13,7 +13,7 @@ public class PluginFile{
 
     public static FileConfiguration getFile(String name){
         File file = new File("./plugins/CX", name);
-        FileConfiguration fConfig = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
+        FileConfiguration fConfig = YamlConfiguration.loadConfiguration(file);
         return fConfig;
     }
 
