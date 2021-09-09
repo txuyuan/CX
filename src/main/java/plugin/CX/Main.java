@@ -1,37 +1,28 @@
 package plugin.CX;
 
-import org.bukkit.event.HandlerList;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import plugin.CGroup.Group;
-import plugin.CGroup.Completer;
-import plugin.CGroup.CGroupCmdParse;
-import plugin.CGroup.CchCompleter;
-import plugin.CGroup.CchParse;
-import plugin.CChat.ChatFormatListener;
-import plugin.CChat.SayExec;
-
-import org.bukkit.plugin.Plugin;
-import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
-
-import plugin.CHome.DeathPointListener;
-import org.bukkit.command.TabCompleter;
-import plugin.CHome.CHomeTabCompleter;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandExecutor;
-import plugin.CHome.CmdParse;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import plugin.CMenu.CMenuExec;
-import plugin.CMenu.MenuListListener;
+
+import plugin.CChat.ChatFormatListener;
+import plugin.CChat.SayExec;
+import plugin.CGroup.*;
+import plugin.CHome.*;
+import plugin.CMenu.*;
 
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Main extends JavaPlugin
-{
+public class Main extends JavaPlugin {
 	private static Main plugin;
 	
     public void onEnable() {
@@ -56,17 +47,25 @@ public class Main extends JavaPlugin
         
         plugin = this;
 
-        this.getLogger().log(Level.INFO, "");
-        System.out.println("CX | §aSTATUS§f >> §9Plugin successfully enabled");
+        getPrinter().log(Level.INFO, "(§aSTATUS§f) §9Plugin successfully enabled");
     }
     
     public void onDisable() {
         HandlerList.unregisterAll((Listener)new DeathPointListener());
         HandlerList.unregisterAll((Listener)new ChatFormatListener());
         HandlerList.unregisterAll((Listener)new MenuListListener());
-        System.out.println("CX | §aSTATUS§f >> §9Plugin successfully disabled");
+        HandlerList.unregisterAll((Listener)new SpectatorTPListener());
+        getPrinter().log(Level.INFO, "CX | §aSTATUS§f >> §9Plugin successfully disabled");
     }
-    
+
+    public static Logger getPrinter(){
+        return Main.getInstance().getLogger();
+    }
+
+    public static Main getInstance() {
+        return plugin;
+    }
+
 	private ShapedRecipe getRecipe() {
 		ItemStack result = new ItemStack(Material.BUNDLE);
 		NamespacedKey key = new NamespacedKey(this, "bundle");
@@ -75,9 +74,5 @@ public class Main extends JavaPlugin
 		recipe.setIngredient('S', Material.STRING);
 		recipe.setIngredient('R', Material.RABBIT_HIDE);
 		return recipe;
-	}
-	
-	public static Main getInstance() {
-		return plugin;
 	}
 }

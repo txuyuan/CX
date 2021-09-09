@@ -40,7 +40,7 @@ public class CchParse implements CommandExecutor{
             }
             catch (IOException exception) {
                 exception.printStackTrace();
-                Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                 player.sendMessage("§c(Error)§f Failed to write to disk");
                 return true;
             }
@@ -59,7 +59,7 @@ public class CchParse implements CommandExecutor{
                     data.save(dataFile);}
                 catch (IOException exception2) {
                     exception2.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                     player.sendMessage("§c(Error)§f Failed to write to disk");
                     return true;
                 }
