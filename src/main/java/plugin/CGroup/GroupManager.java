@@ -115,7 +115,7 @@ public class GroupManager
                             data.save(dataFile);}
                         catch (IOException exception) {
                             exception.printStackTrace();
-                            Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                             return "§c(Error)§f Failed to write to disk";
                         }
                         return "§b(Status) You successfully created a group\n§e(Help)§f Name §f>> " + group.getFormattedName() + "\n§e(Help)§f Alias §f>> " + group.getFormattedAlias();
@@ -147,7 +147,7 @@ public class GroupManager
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 
@@ -166,8 +166,8 @@ public class GroupManager
                             data.save(dataFile);}
                         catch (IOException exception) {
                             exception.printStackTrace();
-                            Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
-                            return "§c(Error)§f Failed to write dislist to disk";
+                            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
+                            return "§c(Error)§f Failed to write to disk";
                         }	
                 	}
                 }
@@ -196,7 +196,7 @@ public class GroupManager
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 
@@ -212,7 +212,7 @@ public class GroupManager
                         data.save(dataFile);}
                     catch (IOException exception) {
                         exception.printStackTrace();
-                        Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                        Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                         return "§c(Error)§f Failed to write leavlist to disk";}
                 }
                 
@@ -243,27 +243,24 @@ public class GroupManager
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 for (String playerUUID : group.getMembers()) {
-                	Main.getInstance().getLogger().log(Level.INFO, "test1");
                 	if (!(playerUUID == sender.getUniqueId().toString())) {
                 		List<String> leaveList;
                     	String dats = removedMemberName + "`" + group.getFormattedName();
                     	if (data.getList("players." + playerUUID + ".leaveList") != null) {
                     		leaveList = (List<String>) data.getList("players." + playerUUID + ".leaveList");
                     		leaveList.add(dats);
-                    		Main.getInstance().getLogger().log(Level.INFO, "test2");
                     	} else 
                     		leaveList = Arrays.asList(dats);
                     	data.set("players." + playerUUID + ".leaveList", leaveList);
                     	try {
-                    		Main.getInstance().getLogger().log(Level.INFO, "test3");
-                            data.save(dataFile);}
-                        catch (IOException exception) {
-                            exception.printStackTrace();
-                            Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                        data.save(dataFile);}
+                    catch (IOException exception) {
+                        exception.printStackTrace();
+                        Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                             return "§c(Error)§f Failed to write leavlist to disk";}
                 	}
                 }
@@ -296,7 +293,7 @@ public class GroupManager
                     data.save(dataFile);}
                 catch (IOException exception) {
                     exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                     return "§c(Error)§f Failed to write to disk";
                 }
                 
@@ -314,7 +311,7 @@ public class GroupManager
                         data.save(dataFile);}
                     catch (IOException exception) {
                         exception.printStackTrace();
-                        Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                        Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
                         return "§c(Error)§f Failed to write leavlist to disk";}
                 }
                 

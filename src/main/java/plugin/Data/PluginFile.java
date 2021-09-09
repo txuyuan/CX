@@ -23,7 +23,7 @@ public class PluginFile{
             fConfig.save(file);
         }
         catch (IOException exception) {
-            Main.getInstance().getLogger().log(Level.INFO, "§c(Error)§f §cError writing to disk");
+            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f §cError writing to disk");
             exception.printStackTrace();
         }
     }
