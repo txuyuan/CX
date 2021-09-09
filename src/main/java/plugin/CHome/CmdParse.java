@@ -12,7 +12,7 @@ import java.util.logging.Level;
 public class CmdParse implements CommandExecutor {
 
     public boolean onCommand(CommandSender s, Command c, String label, String[] a) {
-        if (a[0] != "help" && !(s instanceof Player)) {
+        if (!(s instanceof Player)) {
             s.sendMessage("§c(Error)§f You must be a player to use CHome");
             return true;
         }

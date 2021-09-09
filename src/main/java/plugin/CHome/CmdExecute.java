@@ -23,8 +23,6 @@ import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 
 public class CmdExecute {
-    
-    private static Logger getLogger(){ return getLogger(); }
 
     private static void saveLocation(Location location, String path, Player player){
         File file = new File("./plugins/CX", "chomedata.yml");
@@ -32,7 +30,7 @@ public class CmdExecute {
         fileC.set(path, location);
         try{ fileC.save(file);}
         catch(IOException exception){
-            getLogger().log(Level.INFO, "§c(Error)§f §cError writing to disk");
+            Main.getPrinter().log(Level.INFO, "§c(Error)§f §cError writing to disk");
             player.sendMessage("§c(Error)§f Error writing to disk");
         }
     }
@@ -74,7 +72,7 @@ public class CmdExecute {
 
 	static String setshop(Player p) {
         if (!p.hasPermission("chome.admin")) {
-            getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Attempted to set the shopping district without permissions");
+            Main.getPrinter().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Attempted to set the shopping district without permissions");
             return "§c(Error)§f You do not have permission to set the shopping district";
         }
         saveLocation(p.getLocation(), "shop", p);
@@ -83,7 +81,7 @@ public class CmdExecute {
 
     static String shop(Player p) {
         if (!p.hasPermission("chome.shop")) {
-            getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Atempted to teleport to the shopping district without permissions");
+            Main.getPrinter().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Atempted to teleport to the shopping district without permissions");
             return "§c(Error)§f You do not have permission to teleport to the shopping district";
         }
         Location shop = getLocation("shop");
@@ -94,7 +92,7 @@ public class CmdExecute {
 
     static String sethome(Player p) {
         if (!p.hasPermission("chome.sethome")) {
-            getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Attempted to set home without permission");
+            Main.getPrinter().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Attempted to set home without permission");
             return "§c(Error)§f You do not have permission to set your home";
         }
         String uuid = p.getUniqueId().toString();
@@ -126,7 +124,7 @@ public class CmdExecute {
             }
         }else{
             if (!player.hasPermission("chome.home")) {
-                getLogger().log(Level.INFO, "§b(Status) §e" + player.getName() + "§f Attempted to teleport to home without permission");
+                Main.getPrinter().log(Level.INFO, "§b(Status) §e" + player.getName() + "§f Attempted to teleport to home without permission");
                 player.sendMessage("§c(Error)§f You do not have permission to teleport to your home");
             }
             Location loc = getHome(player.getUniqueId());
@@ -148,14 +146,14 @@ public class CmdExecute {
         fileC.set(player.getUniqueId().toString() + ".death-used", used);
         try{ fileC.save(file);}
         catch(IOException e) {
-            getLogger().log(Level.INFO, "§c(Error)§f §cError writing to disk");
+            Main.getPrinter().log(Level.INFO, "§c(Error)§f §cError writing to disk");
             player.sendMessage("§c(Error)§f Error writing to disk");
         }
     }
 
     static void setDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        getLogger().log(Level.INFO, "(CHOME | DEATH) " + player.getName() + " has died at " + player.getLocation());
+        Main.getPrinter().log(Level.INFO, "(CHOME | DEATH) " + player.getName() + " has died at " + player.getLocation());
         saveLocation(player.getLocation(), player.getUniqueId().toString() + ".death", player);
         setDeathUsed(player, false);
     }
@@ -171,7 +169,7 @@ public class CmdExecute {
         setDeathUsed(p, true);
 
         if(!p.hasPermission("chome.death")){
-            getLogger().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§fAttempted to teleport to their last death point without permission");
+            Main.getPrinter().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§fAttempted to teleport to their last death point without permission");
             return "§b(Status)§f You do not have permission to teleport to your last death point";
         }
         return teleport(p, l, Destination.DEATH);
