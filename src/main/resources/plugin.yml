@@ -1,6 +1,6 @@
 main: plugin.CX.Main
 name: CX-3rdLife
-version: 2.6.0
+version: 2.6.1
 author: Xuyuan
 api-version: 1.17
 commands:
@@ -35,7 +35,7 @@ permissions:
     default: op
   chome.admin:
     description: Allows player to set shopping district location, teleport to shop from all dimensions, teleport to other people's homes
-    default:op
+    default: op
   cgroup.use:
     description: Allows a player to use CGroup functionality
     default: true
