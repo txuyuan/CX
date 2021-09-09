@@ -22,6 +22,7 @@ public class MenuListListener implements Listener {
         FileConfiguration fConfig = PluginFile.getFile("cMenuFile");
         List<String> idList = (List<String>) fConfig.getList("players");
         List<Player> pList = new ArrayList<>();
+        if(idList==null) return;
         for (String str : idList)
             if (Bukkit.getPlayer(UUID.fromString(str)) != null)
                 pList.add(Bukkit.getPlayer(UUID.fromString(str)));

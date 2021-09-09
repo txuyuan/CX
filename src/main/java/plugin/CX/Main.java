@@ -42,8 +42,6 @@ public class Main extends JavaPlugin {
 
         this.getCommand("cmenu").setExecutor((CommandExecutor)new CMenuExec());
         this.getServer().getPluginManager().registerEvents((Listener)new MenuListListener(), (Plugin)this);
-
-        this.getServer().getPluginManager().registerEvents((Listener)new SpectatorTPListener(), (Plugin)this);
         
         Bukkit.addRecipe(getRecipe());
         
