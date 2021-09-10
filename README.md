@@ -1,5 +1,5 @@
 # CX
-A plugin bundle I made for my own use. Just thought I might put it here in case anyone wanted. Keep in mind this is very much still in development and not ready for production servers. 
+A plugin bundle I made for my own use. Just thought I might put it here in case anyone wanted.
 
 > *All commands are provided without the preceding `/` that indicates a cmd*
 
