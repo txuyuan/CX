@@ -20,10 +20,8 @@ public class Completer implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		List<String> completions;
 		
-		if (!command.getName().equalsIgnoreCase("cgroup") || !(sender instanceof Player)) {
-			Main.getInstance().getLogger().log(Level.INFO, "test 1");
+		if (!command.getName().equalsIgnoreCase("cgroup") || !(sender instanceof Player))
 			return Arrays.asList("");
-		}
 		
 		Player player = (Player)sender;
 		String playerUUID = player.getUniqueId().toString();

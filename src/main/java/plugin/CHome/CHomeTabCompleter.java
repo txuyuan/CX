@@ -1,7 +1,10 @@
 package plugin.CHome;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.ArrayList;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.List;
 import org.bukkit.command.Command;
@@ -10,20 +13,24 @@ import org.bukkit.command.TabCompleter;
 
 public class CHomeTabCompleter implements TabCompleter
 {
-    public List<String> onTabComplete(final CommandSender s, final Command c, final String al, final String[] a) {
-        if (c.getName().equals("chome") && a.length < 2 && s instanceof Player) {
-            final List<String> defList = new ArrayList<String>();
-            final List<String> rList = new ArrayList<String>();
-            defList.add("help");
-            defList.add("death");
-            defList.add("home");
-            defList.add("sethome");
-            defList.add("shop");
-            for (final String str : defList) 
-                if (str.indexOf(a[0]) == 0) 
-                    rList.add(str);
-            return rList;
+    public List<String> onTabComplete(CommandSender sender,  Command command,  String alias,  String[] args) {
+        List<String> completions;
+        boolean isAdmin = !(sender instanceof Player) || sender.hasPermission("chome.admin");
+
+        if(!command.getName().equalsIgnoreCase("chome"))
+            return Arrays.asList("");
+
+        if(args.length == 1){
+            completions = Arrays.asList("death", "home", "sethome", "shop", "help");
+            if(!(sender instanceof Player) || sender.hasPermission("chome.admin")) completions.add("setshop");
+            if(!(sender instanceof Player)) completions.remove("sethome");
+        }else{
+            if(!isAdmin || args[0] == "help" || args[0] == "shop"){
+                return Arrays.asList("");}
+            if(args[0] == "death" || args[0] == "home")
+                return null;
+            return Arrays.asList("");
         }
-        return null;
+        return completions;
     }
 }
