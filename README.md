@@ -1,5 +1,6 @@
-# CX
-A plugin bundle I made for my own use. Just thought I might put it here in case anyone wanted. Keep in mind this is very much still in development and not ready for production servers. 
+# CX (ThirdLife edition)
+
+A plugin bundle I made for my own use. Just thought I might put it here in case anyone wanted. This branch is still under heavy development and is quite volatile. 
 
 > *All commands are provided without the preceding `/` that indicates a cmd*
 
@@ -9,6 +10,11 @@ A plugin bundle I made for my own use. Just thought I might put it here in case 
 * [CChat](#cchat)
 * [CMenu](#cmenu)
 * [Miscallenous](#miscallenous)
+
+
+<br></br>
+## ThirdLife
+This branch of CX is specifically made to be compatible with the [ThirdLife plugin](https://github.com/txuyuan/ThirdLife) I made, retaining the same functionality as the main branch of CX. The ThirdLife plugin is very much in heavy development and should not be used on production servers (unless you want to encounter bugs galore).
 
 
 <br></br>
