@@ -1,6 +1,5 @@
 package plugin.CChat;
 
-import java.util.Iterator;
 import java.util.ArrayList;
 import org.bukkit.entity.Player;
 import java.util.List;

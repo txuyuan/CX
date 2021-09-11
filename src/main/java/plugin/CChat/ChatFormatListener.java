@@ -1,6 +1,5 @@
 package plugin.CChat;
 
-import org.bukkit.ChatColor;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.EventHandler;
@@ -29,7 +28,7 @@ public class ChatFormatListener implements Listener
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-        FileConfiguration data = (FileConfiguration)YamlConfiguration.loadConfiguration(dataFile);
+        FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
         String channelAlias = data.getString("players." + event.getPlayer().getUniqueId().toString() + ".channel", "ALL");
         String channel;
         if (channelAlias.equals("ALL")) 

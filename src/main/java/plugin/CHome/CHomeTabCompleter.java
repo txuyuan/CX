@@ -1,10 +1,8 @@
 package plugin.CHome;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.List;
 import org.bukkit.command.Command;
@@ -14,16 +12,23 @@ import org.bukkit.command.TabCompleter;
 public class CHomeTabCompleter implements TabCompleter
 {
     public List<String> onTabComplete(CommandSender sender,  Command command,  String alias,  String[] args) {
-        List<String> completions;
-        boolean isAdmin = !(sender instanceof Player) || sender.hasPermission("chome.admin");
+        boolean isAdmin = sender.hasPermission("chome.admin");
 
         if(!command.getName().equalsIgnoreCase("chome"))
             return Arrays.asList("");
 
+        if(!(sender instanceof Player)){
+            if(args.length == 1){
+                return Arrays.asList("home", "death", "help");
+            }
+            return null;
+        }
+
         if(args.length == 1){
-            completions = Arrays.asList("death", "home", "sethome", "shop", "help");
-            if(!(sender instanceof Player) || sender.hasPermission("chome.admin")) completions.add("setshop");
-            if(!(sender instanceof Player)) completions.remove("sethome");
+            List<String> rList = new ArrayList<>();
+            rList.add("death"); rList.add("home"); rList.add("sethome"); rList.add("shop"); rList.add("help");
+            if((sender).hasPermission("chome.admin")) rList.add("setshop");
+            return rList;
         }else{
             if(!isAdmin || args[0] == "help" || args[0] == "shop"){
                 return Arrays.asList("");}
@@ -31,6 +36,5 @@ public class CHomeTabCompleter implements TabCompleter
                 return null;
             return Arrays.asList("");
         }
-        return completions;
     }
 }

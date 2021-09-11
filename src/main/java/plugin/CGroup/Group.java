@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Bukkit;
-import java.util.Iterator;
 import org.bukkit.configuration.file.FileConfiguration;
-import java.util.Collection;
 import java.util.ArrayList;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
