@@ -2,7 +2,6 @@ package plugin.CGroup;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import java.io.IOException;
-import java.util.UUID;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;

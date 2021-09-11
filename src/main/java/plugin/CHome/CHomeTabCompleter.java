@@ -1,7 +1,8 @@
 package plugin.CHome;
 
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.ArrayList;
+
 import org.bukkit.entity.Player;
 import java.util.List;
 import org.bukkit.command.Command;
@@ -10,20 +11,30 @@ import org.bukkit.command.TabCompleter;
 
 public class CHomeTabCompleter implements TabCompleter
 {
-    public List<String> onTabComplete(final CommandSender s, final Command c, final String al, final String[] a) {
-        if (c.getName().equals("chome") && a.length < 2 && s instanceof Player) {
-            final List<String> defList = new ArrayList<String>();
-            final List<String> rList = new ArrayList<String>();
-            defList.add("help");
-            defList.add("death");
-            defList.add("home");
-            defList.add("sethome");
-            defList.add("shop");
-            for (final String str : defList) 
-                if (str.indexOf(a[0]) == 0) 
-                    rList.add(str);
-            return rList;
+    public List<String> onTabComplete(CommandSender sender,  Command command,  String alias,  String[] args) {
+        boolean isAdmin = sender.hasPermission("chome.admin");
+
+        if(!command.getName().equalsIgnoreCase("chome"))
+            return Arrays.asList("");
+
+        if(!(sender instanceof Player)){
+            if(args.length == 1){
+                return Arrays.asList("home", "death", "help");
+            }
+            return null;
         }
-        return null;
+
+        if(args.length == 1){
+            List<String> rList = new ArrayList<>();
+            rList.add("death"); rList.add("home"); rList.add("sethome"); rList.add("shop"); rList.add("help");
+            if((sender).hasPermission("chome.admin")) rList.add("setshop");
+            return rList;
+        }else{
+            if(!isAdmin || args[0] == "help" || args[0] == "shop"){
+                return Arrays.asList("");}
+            if(args[0] == "death" || args[0] == "home")
+                return null;
+            return Arrays.asList("");
+        }
     }
 }

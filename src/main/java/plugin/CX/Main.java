@@ -17,6 +17,7 @@ import plugin.CChat.ChatFormatListener;
 import plugin.CChat.SayExec;
 import plugin.CGroup.*;
 import plugin.CHome.*;
+import plugin.CHome.Commands.ChomeManager;
 import plugin.CMenu.*;
 
 import java.util.logging.Level;
@@ -27,7 +28,7 @@ public class Main extends JavaPlugin {
 	
     public void onEnable() {
         this.getDataFolder().mkdir();
-        this.getCommand("chome").setExecutor(new CmdParse());
+        this.getCommand("chome").setExecutor(new ChomeManager());
         this.getCommand("chome").setTabCompleter(new CHomeTabCompleter());
         this.getServer().getPluginManager().registerEvents(new DeathPointListener(), this);
         

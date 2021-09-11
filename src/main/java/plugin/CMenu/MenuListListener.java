@@ -32,7 +32,7 @@ public class MenuListListener implements Listener {
             if(pList.contains(player)) it.remove();
         }
 
-        Main.getInstance().getLogger().log(Level.INFO, "§7(CMenu) Ping from " + event.getAddress());
+        Main.getInstance().getLogger().log(Level.INFO, "§7Ping from " + event.getAddress());
     }
 
 }

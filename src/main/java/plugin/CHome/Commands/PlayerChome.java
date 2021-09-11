@@ -1,30 +1,23 @@
-package plugin.CHome;
+package plugin.CHome.Commands;
 
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import plugin.CX.Main;
-
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import java.io.IOException;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import java.io.File;
-import java.util.UUID;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.scheduler.BukkitRunnable;
+import plugin.CX.Main;
 
-public class CmdExecute {
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+import java.util.logging.Level;
 
-    private static void saveLocation(Location location, String path, Player player){
+public class PlayerChome {
+
+     static void saveLocation(Location location, String path, Player player){
         File file = new File("./plugins/CX", "chomedata.yml");
         FileConfiguration fileC = YamlConfiguration.loadConfiguration(file);
         fileC.set(path, location);
@@ -35,13 +28,13 @@ public class CmdExecute {
         }
     }
 
-    private static Location getLocation(String path){
+     static Location getLocation(String path){
         File file = new File("./plugins/CX", "chomedata.yml");
         FileConfiguration fileC = YamlConfiguration.loadConfiguration(file);
         return fileC.getLocation(path);
     }
 
-    private enum Destination{
+     private enum Destination{
         HOME, DEATH, SHOP;
         public String toString(){
             switch (this){
@@ -70,9 +63,9 @@ public class CmdExecute {
 
     //------
 
-	static String setshop(Player p) {
+    static String setshop(Player p) {
         if (!p.hasPermission("chome.admin")) {
-            Main.getPrinter().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Attempted to set the shopping district without permissions");
+            Main.getPrinter().log(Level.INFO, "§b(Status)§e" + p.getName() + "§f attempted to set the shopping district without permissions");
             return "§c(Error)§f You do not have permission to set the shopping district";
         }
         saveLocation(p.getLocation(), "shop", p);
@@ -81,7 +74,7 @@ public class CmdExecute {
 
     static String shop(Player p) {
         if (!p.hasPermission("chome.shop")) {
-            Main.getPrinter().log(Level.INFO, "§b(Status)§f §e" + p.getName() + "§f Atempted to teleport to the shopping district without permissions");
+            Main.getPrinter().log(Level.INFO, "§b(Status)§e" + p.getName() + "§f atempted to teleport to the shopping district without permissions");
             return "§c(Error)§f You do not have permission to teleport to the shopping district";
         }
         Location shop = getLocation("shop");
@@ -151,7 +144,7 @@ public class CmdExecute {
         }
     }
 
-    static void setDeath(PlayerDeathEvent e) {
+    public static void setDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
         Main.getPrinter().log(Level.INFO, "(CHOME | DEATH) " + player.getName() + " has died at " + player.getLocation());
         saveLocation(player.getLocation(), player.getUniqueId().toString() + ".death", player);
@@ -174,4 +167,5 @@ public class CmdExecute {
         }
         return teleport(p, l, Destination.DEATH);
     }
+
 }
