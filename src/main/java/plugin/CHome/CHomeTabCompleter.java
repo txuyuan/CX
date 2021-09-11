@@ -15,7 +15,7 @@ public class CHomeTabCompleter implements TabCompleter
         boolean isAdmin = sender.hasPermission("chome.admin");
 
         if(!command.getName().equalsIgnoreCase("chome"))
-            return Arrays.asList("");
+            return Arrays.asList();
 
         if(!(sender instanceof Player)){
             if(args.length == 1){
@@ -31,10 +31,10 @@ public class CHomeTabCompleter implements TabCompleter
             return rList;
         }else{
             if(!isAdmin || args[0] == "help" || args[0] == "shop"){
-                return Arrays.asList("");}
+                return Arrays.asList();}
             if(args[0] == "death" || args[0] == "home")
                 return null;
-            return Arrays.asList("");
+            return Arrays.asList();
         }
     }
 }
