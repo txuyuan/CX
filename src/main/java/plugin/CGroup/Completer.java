@@ -51,7 +51,9 @@ public class Completer implements TabCompleter {
             }   
         }
 
-        return completions.stream().filter(argument -> argument.indexOf(args[args.length - 1]) == 0).sorted().collect(Collectors.toList());
+        return completions.stream().filter(
+                argument -> argument.toLowerCase().indexOf(args[args.length - 1].toLowerCase()) == 0)
+                .sorted().collect(Collectors.toList());
     }
     
     
