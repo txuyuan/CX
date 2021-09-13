@@ -9,7 +9,7 @@ commands:
     alias: ch
   cgroup:
     description: CGroup for group chats and private communication
-    aliases: [cgrp, cg]
+    aliases: [ cgrp, cg ]
   cch:
     description: Shortcut for /cgroup channel
   say:

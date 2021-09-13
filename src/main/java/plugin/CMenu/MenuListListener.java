@@ -6,13 +6,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
+import plugin.CX.Main;
 import plugin.Data.PluginFile;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-import plugin.CX.Main;
 import java.util.logging.Level;
 
 public class MenuListListener implements Listener {
@@ -26,12 +26,12 @@ public class MenuListListener implements Listener {
             if (Bukkit.getPlayer(UUID.fromString(str)) != null)
                 pList.add(Bukkit.getPlayer(UUID.fromString(str)));
         Iterator<Player> it = event.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Player player = it.next();
-            if(pList.contains(player)) it.remove();
+            if (pList.contains(player)) it.remove();
         }
 
-        Main.getInstance().getLogger().log(Level.INFO, "§7Ping from " + event.getAddress());
+        Main.getPrinter().log(Level.INFO, "§7Ping from " + event.getAddress());
     }
 
 }

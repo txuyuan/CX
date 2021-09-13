@@ -1,19 +1,18 @@
 package plugin.CGroup;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class CGroupCmdParse implements CommandExecutor
-{
+public class CGroupCmdParse implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String lbl, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§c(Error)§f You must be a player to use this command");
             return true;
         }
-        Player player = (Player)sender;
+        Player player = (Player) sender;
         if (!player.hasPermission("cgroup.use")) {
             sender.sendMessage("§c(Error)§f You do not have permission to use CGroup");
             return true;
@@ -46,10 +45,10 @@ public class CGroupCmdParse implements CommandExecutor
         sender.sendMessage("§c(Error)§f \"" + args[0] + "\" is not a valid argument" + "\n§3(Info)§f Do §7/cgroup help§f for a list of commands and syntax");
         return true;
     }
-    
+
     private String helpParse(String[] args) {
         switch (args.length) {
-            case 1: 
+            case 1:
                 return "§e(Help) §e§lCGroup V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "\n§e(Help)§f /cgroup [group | invite | channel]§f" + "\n§e(Help)§f Use §7/cgroup help [group| invite | channel]§f to get more info";
             case 2: {
                 String s;
@@ -81,7 +80,7 @@ public class CGroupCmdParse implements CommandExecutor
                                 "\n   > §e<alias>§f   | Alias of group to remove member from" +
                                 "\n   > §e<member>§f  | Name of member to remove from group" +
                                 "\n§b----------------------------------------------------------§f";
-                    case "channel": 
+                    case "channel":
                         return "§b---------------------- §e(Help | Channel)§9 ----------------------§f" +
                                 "\n> §fchannel <alias>" +
                                 "\n   > §e<alias>§f   | Alias of group to start speaking in. If group with given alias does not exist, you will be sent to §eGlobal§f chat" +
@@ -93,7 +92,7 @@ public class CGroupCmdParse implements CommandExecutor
                         "\n§e(Help)§f /cgroup [group | invite | channel]§f" +
                         "\n§e(Help)§f Use §7/cgroup help [group| invite | channel]§f to get more info";
             }
-            default: 
+            default:
                 return "§c(Error)§f Too many arguments";
         }
     }
