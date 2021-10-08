@@ -8,7 +8,7 @@ A plugin bundle I made for my own use. Just thought I might put it here in case 
 * [CGroup](#cgroup)
 * [CChat](#cchat)
 * [CMenu](#cmenu)
-* [Miscallenous](#miscallenous)
+* [Miscellaneous](#miscallenous)
 
 
 <br></br>
