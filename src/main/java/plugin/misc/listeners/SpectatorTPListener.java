@@ -1,4 +1,4 @@
-package plugin.CX;
+package plugin.misc.listeners;
 
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;

@@ -25,10 +25,10 @@ public class ChatFormatListener implements Listener {
     private static void notifs(PlayerJoinEvent event, Player player) {
 
         File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-        FileConfiguration data = YamlConfiguration.loadConfiguration((File) dataFile);
+        FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
 
         if (data.getConfigurationSection("groups") != null) {
-            List<String> invites = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> (Group) data.getObject("groups." + key, Group.class)).filter
+            List<String> invites = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter
                     (group -> group.getInvites().contains(player.getUniqueId().toString())).map(group -> group.getAlias()).collect(Collectors.toList());
             for (String groupAli : invites) {
                 Group inviteGroup = Group.getGroup(groupAli, data);
@@ -37,9 +37,9 @@ public class ChatFormatListener implements Listener {
             }
         }
 
-        if (data.getList("players." + player.getUniqueId().toString() + ".disList") != null) {
-            String search = "players." + player.getUniqueId().toString() + ".disList";
-            List<String> disList = (List<String>) data.getList("players." + player.getUniqueId().toString() + ".disList");
+        if (data.getList("players." + player.getUniqueId() + ".disList") != null) {
+            String search = "players." + player.getUniqueId() + ".disList";
+            List<String> disList = (List<String>) data.getList("players." + player.getUniqueId() + ".disList");
             for (String dis : disList) {
                 player.sendMessage("§e(Info)§f The group §e" + dis + "§f (which you were a part of) was disbanded");
             }
@@ -52,9 +52,9 @@ public class ChatFormatListener implements Listener {
             }
         }
 
-        if (data.getList("players." + player.getUniqueId().toString() + ".leaveList") != null) {
-            String search = "players." + player.getUniqueId().toString() + ".leaveList";
-            List<String> leavList = (List<String>) data.getList("players." + player.getUniqueId().toString() + ".leaveList");
+        if (data.getList("players." + player.getUniqueId() + ".leaveList") != null) {
+            String search = "players." + player.getUniqueId() + ".leaveList";
+            List<String> leavList = (List<String>) data.getList("players." + player.getUniqueId() + ".leaveList");
             for (String leav : leavList) {
                 List<String> leavs = Arrays.asList(leav.split("`"));
                 player.sendMessage("§e(Info)§f Player §e" + leavs.get(0) + "§f left the group §e" + leavs.get(1));
@@ -68,9 +68,9 @@ public class ChatFormatListener implements Listener {
             }
         }
 
-        if (data.getList("players." + player.getUniqueId().toString() + ".transList") != null) {
-            String search = "players." + player.getUniqueId().toString() + ".transList";
-            List<String> transList = (List<String>) data.getList("players." + player.getUniqueId().toString() + ".transList");
+        if (data.getList("players." + player.getUniqueId() + ".transList") != null) {
+            String search = "players." + player.getUniqueId() + ".transList";
+            List<String> transList = (List<String>) data.getList("players." + player.getUniqueId() + ".transList");
             for (String trans : transList) {
                 List<String> transInfo = Arrays.asList(trans.split("`"));
                 player.sendMessage("§e(Info)§f Ownership of grooup §e" + transInfo.get(1) + "§f has been transferred to player §e" + transInfo.get(0));
@@ -87,12 +87,11 @@ public class ChatFormatListener implements Listener {
     }
 
 
-
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
         FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
-        String channelAlias = data.getString("players." + event.getPlayer().getUniqueId().toString() + ".channel", "ALL");
+        String channelAlias = data.getString("players." + event.getPlayer().getUniqueId() + ".channel", "ALL");
         String channel;
         if (channelAlias.equals("ALL"))
             channel = "§6§oALL§r";
@@ -100,7 +99,7 @@ public class ChatFormatListener implements Listener {
             Group group = Group.getGroup(channelAlias, data);
             if (group == null) {
                 channel = "§6§oALL§r";
-                data.set("players." + event.getPlayer().getUniqueId().toString() + ".channel", (Object) "ALL");
+                data.set("players." + event.getPlayer().getUniqueId() + ".channel", "ALL");
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
@@ -112,7 +111,7 @@ public class ChatFormatListener implements Listener {
                 event.setCancelled(true);
             } else if (!group.getMembers().contains(event.getPlayer().getUniqueId().toString())) {
                 channel = "§6§oALL§r";
-                data.set("players." + event.getPlayer().getUniqueId().toString() + ".channel", (Object) "ALL");
+                data.set("players." + event.getPlayer().getUniqueId() + ".channel", "ALL");
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
@@ -130,7 +129,7 @@ public class ChatFormatListener implements Listener {
             }
         }
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
-        event.setFormat("(" + channel + "§f | §a%s§f) %s");
+        event.setFormat(event.getPlayer().hasPermission("cx.opName") ? ("(" + channel + "§f | §c%s§f) %s") : ("(" + channel + "§f | §a%s§f) %s"));
     }
 
     @EventHandler

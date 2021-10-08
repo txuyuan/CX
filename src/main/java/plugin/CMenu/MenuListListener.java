@@ -21,8 +21,6 @@ public class MenuListListener implements Listener {
     public void onPing(ServerListPingEvent event) {
         FileConfiguration fConfig = PluginFile.getFile("cMenuFile");
         List<String> idList = (List<String>) fConfig.getList("players");
-        if(idList == null)
-            return;
         List<Player> pList = new ArrayList<>();
         for (String str : idList)
             if (Bukkit.getPlayer(UUID.fromString(str)) != null)

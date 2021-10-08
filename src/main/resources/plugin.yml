@@ -1,12 +1,12 @@
 main: plugin.CX.Main
 name: CX
-version: 2.7.0
+version: 2.7.1-beta
 author: Xuyuan
 api-version: 1.17
 commands:
   chome:
     description: CHome for homes, death and shop
-    alias: ch
+    aliases: ch
   cgroup:
     description: CGroup for group chats and private communication
     aliases: [ cgrp, cg ]
@@ -15,7 +15,12 @@ commands:
   say:
     description: Say message in chat. Usage | /say <message>
   cmenu:
-    description: Op command to operate CMenu
+    description: Operate CMenu
+  enderchest:
+    description: Access player enderchest
+    aliases: ec
+  invsee:
+    description: Access player inventory
 permissions:
   chome.home:
     description: Teleport to home (chome home)
@@ -43,4 +48,13 @@ permissions:
     default: op
   cx.allowSpecTp:
     desription: Allows player to teleport using spectator functions
+    default: op
+  cx.enderchest:
+    description: Allows player to access enderchest of any player
+    default: op
+  cx.invsee:
+    description: Use /invsee to access player inventory
+    default: op
+  cx.opName:
+    description: Red name for ops
     default: op

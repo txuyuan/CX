@@ -54,7 +54,7 @@ public class CGroupCmdParse implements CommandExecutor {
                 String s;
                 switch (s = args[1]) {
                     case "group":
-                        return "§b----------------------- §e(Help | Group)§9 -----------------------" +
+                        return "§b----------------------- §e(Help | Group)§b -----------------------" +
                                 "\n>§f §esend <alias> <invitee>§f" +
                                 "\n   > §e<alias>§f   | Alias of group to send invite to" +
                                 "\n   > §e<invitee>§f | Name of player to send invite to" +
@@ -67,7 +67,7 @@ public class CGroupCmdParse implements CommandExecutor {
                                 "\n   > §e<alias>§f   | Alias of group to reject invite from" +
                                 "\n§b----------------------------------------------------------§f";
                     case "invite":
-                        return "   §b----------------------- §e(Help | Invite)§9 -----------------------§f" +
+                        return "   §b----------------------- §e(Help | Invite)§b -----------------------§f" +
                                 "\n> §ecreate <name> <alias> <colour>§f" +
                                 "\n   > §e<name>§f    | Name of new group" +
                                 "\n   > §e<alias>§f   | Alias of new group" +
@@ -81,7 +81,7 @@ public class CGroupCmdParse implements CommandExecutor {
                                 "\n   > §e<member>§f  | Name of member to remove from group" +
                                 "\n§b----------------------------------------------------------§f";
                     case "channel":
-                        return "§b---------------------- §e(Help | Channel)§9 ----------------------§f" +
+                        return "§b---------------------- §e(Help | Channel)§b ----------------------§f" +
                                 "\n> §fchannel <alias>" +
                                 "\n   > §e<alias>§f   | Alias of group to start speaking in. If group with given alias does not exist, you will be sent to §eGlobal§f chat" +
                                 "\n§b----------------------------------------------------------§f";
