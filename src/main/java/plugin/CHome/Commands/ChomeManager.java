@@ -7,8 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import plugin.CX.Main;
 
-import java.util.logging.Level;
-
 public class ChomeManager implements CommandExecutor {
 
     public boolean onCommand(CommandSender s, Command c, String label, String[] args) {
@@ -57,7 +55,7 @@ public class ChomeManager implements CommandExecutor {
                             "\n§b----------------- §ePlayer Commands (Admin)§b ------------------\n" +
                             helpMsg(true) +
                             "\n§b------------------------------------------------------------§f";
-                    Main.getPrinter().log(Level.INFO, reply);
+                    Main.logInfo(reply);
                     break;
             }
         }

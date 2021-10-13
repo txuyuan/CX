@@ -8,7 +8,6 @@ import plugin.CX.Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class InviteManager {
     public static String parseInvite(Player player, String[] args) {
@@ -39,7 +38,7 @@ public class InviteManager {
                 return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 4: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 if (group == null)
                     return "§c(Error)§f A group with alias §f§n§o" + args[2].toUpperCase() + "§c does not exist";
@@ -60,13 +59,12 @@ public class InviteManager {
                         if (invitee != null)
                             invitee.sendMessage("CGROUP | §dINFO§f >> You have been invited to join " + group.getFormattedName() + " by §e" + player.getDisplayName()
                                     + "\n§fCGROUP | §dINFO§f >> Use §7/cgroup invite accept " + group.getAlias() + "§f to accept invitation");
-                        data.set("groups." + group.getAlias(), (Object) group);
+                        data.set("groups." + group.getAlias(), group);
                         try {
                             data.save(dataFile);
                         } catch (IOException exception) {
-                            exception.printStackTrace();
-                            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                            return "§c(Error)§f Failed to write to disk";
+                            Main.logDiskError(exception);
+                            return "§c(Error)§f Error writing to disk";
                         }
                         return "§b(Status)§f You sent an invite to " + group.getFormattedName() + " to §e" + invitedPlayerName;
                     }
@@ -86,7 +84,7 @@ public class InviteManager {
                 return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 4: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 if (group == null)
                     return "§c(Error)§f A group with alias §f§n§o" + args[2].toUpperCase() + "§c does not exist";
@@ -95,13 +93,12 @@ public class InviteManager {
                 String revokedPlayerName = args[3];
                 if (!group.revokeInvite(revokedPlayerName))
                     return "§c(Error)§f " + revokedPlayerName + " §cdoes not have an invite to " + group.getFormattedName();
-                data.set("groups." + group.getAlias(), (Object) group);
+                data.set("groups." + group.getAlias(), group);
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
                 return "§b(Status)§f Revoked §e" + revokedPlayerName + "'s to " + group.getFormattedName();
             }
@@ -116,19 +113,18 @@ public class InviteManager {
                 return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 3: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 if (group == null)
                     return "§c(Error)§f A group with alias §f§n§o" + args[2].toUpperCase() + "§c does not exist";
                 if (!group.acceptInvite(player.getUniqueId().toString()))
                     return "§c(Error)§f You do not have an invite to " + group.getFormattedName();
-                data.set("groups." + group.getAlias(), (Object) group);
+                data.set("groups." + group.getAlias(), group);
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
                 return "§b(Status)§f Accepted your invite to " + group.getFormattedName();
             }
@@ -143,19 +139,18 @@ public class InviteManager {
                 return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 3: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 if (group == null)
                     return "§c(Error)§f A group with alias §f§n§o" + args[2].toUpperCase() + "§c does not exist";
                 if (!group.rejectInvite(player.getUniqueId().toString()))
                     return "§c(Error)§f You do not have an invite to " + group.getFormattedName();
-                data.set("groups." + group.getAlias(), (Object) group);
+                data.set("groups." + group.getAlias(), group);
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
                 return "§b(Status)§f Rejected your invite to " + group.getFormattedName();
             }

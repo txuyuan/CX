@@ -12,7 +12,7 @@ public class InvseeExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
         if ((commandSender instanceof Player) && !commandSender.hasPermission("cx.invsee")) {
-            commandSender.sendMessage("§c(Error)§f You do not have permission to use this command");
+            commandSender.sendMessage("§c(Error)§f You do not have permission to do this");
             return true;
         }
         if (args.length < 1) {
@@ -25,10 +25,10 @@ public class InvseeExecutor implements CommandExecutor {
             return true;
         }
 
-        if(commandSender instanceof Player) {
+        if (commandSender instanceof Player) {
             Player player = (Player) commandSender;
             player.openInventory(target.getInventory());
-        }else
+        } else
             commandSender.sendMessage("§9(Info)§f §7" + args[0] + "§f has this following inventory: " + InvToString.toString(target.getInventory()));
 
         return true;

@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class ChatFormatListener implements Listener {
@@ -48,7 +47,7 @@ public class ChatFormatListener implements Listener {
                 data.save(dataFile);
             } catch (IOException exception) {
                 exception.printStackTrace();
-                Main.getPrinter().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                Main.logDiskError(exception);
             }
         }
 
@@ -64,7 +63,7 @@ public class ChatFormatListener implements Listener {
                 data.save(dataFile);
             } catch (IOException exception) {
                 exception.printStackTrace();
-                Main.getPrinter().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                Main.logDiskError(exception);
             }
         }
 
@@ -80,7 +79,7 @@ public class ChatFormatListener implements Listener {
                 data.save(dataFile);
             } catch (IOException exception) {
                 exception.printStackTrace();
-                Main.getPrinter().log(Level.INFO, "§c(Error)§f Failed to write to disk");
+                Main.logDiskError(exception);
             }
         }
 
@@ -104,8 +103,8 @@ public class ChatFormatListener implements Listener {
                     data.save(dataFile);
                 } catch (IOException exception) {
                     exception.printStackTrace();
-                    Main.getPrinter().log(Level.INFO, "§c(Error)§f Failed to write to disk");
-                    event.getPlayer().sendMessage("§c(Error)§f Failed to write to disk");
+                    Main.logDiskError(exception);
+                    event.getPlayer().sendMessage("§c(Error)§f Error writing to disk");
                 }
                 event.getPlayer().sendMessage("§9(Info)§f The channel you were in was deleted\n§b(Status)§f Now messaging in §eGlobal");
                 event.setCancelled(true);
@@ -116,8 +115,8 @@ public class ChatFormatListener implements Listener {
                     data.save(dataFile);
                 } catch (IOException exception) {
                     exception.printStackTrace();
-                    Main.getPrinter().log(Level.INFO, "§c(Error)§f Failed to write to disk");
-                    event.getPlayer().sendMessage("§c(Error)§f Failed to write to disk");
+                    Main.logDiskError(exception);
+                    event.getPlayer().sendMessage("§c(Error)§f Error writing to disk");
                 }
                 event.getPlayer().sendMessage("§9(Info)§f The channel you were in was deleted, or you were removed\n§b(Status)§f Now messaging in §eGlobal");
                 event.setCancelled(true);
@@ -135,7 +134,7 @@ public class ChatFormatListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Main.getPrinter().log(Level.INFO, player.getDisplayName() + " logged in at" + player.getLocation());
+        Main.logInfo(player.getDisplayName() + " logged in at" + player.getLocation());
         event.setJoinMessage("§a(Join)§6 " + player.getDisplayName() + "§f joined the game");
         notifs(event, player);
     }
@@ -143,7 +142,7 @@ public class ChatFormatListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Main.getPrinter().log(Level.INFO, player.getDisplayName() + " logged out at" + player.getLocation());
+        Main.logInfo(player.getDisplayName() + " logged out at" + player.getLocation());
         event.setQuitMessage("§a(Leave)§6 " + player.getDisplayName() + "§f left the game");
     }
 }

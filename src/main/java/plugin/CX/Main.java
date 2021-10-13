@@ -17,52 +17,55 @@ import plugin.CHome.Commands.ChomeManager;
 import plugin.CHome.DeathPointListener;
 import plugin.CMenu.CMenuExec;
 import plugin.CMenu.MenuListListener;
+import plugin.misc.MiscManager;
 import plugin.misc.commands.BeeExecutor;
-import plugin.misc.listeners.SpectatorTPListener;
 import plugin.misc.commands.EnderchestExecutor;
 import plugin.misc.commands.InvseeExecutor;
+import plugin.misc.listeners.SpectatorTPListener;
+import plugin.misc.others.Recipes;
 
+import java.io.IOException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main extends JavaPlugin {
-    //private static Main plugin;
 
-    public static Logger getPrinter() {
-        return Main.getInstance().getLogger();
+
+    public static void logInfo(String msg) {
+        getInstance().getLogger().log(Level.INFO, msg);
     }
+
+    public static void logDiskError(IOException e) {
+        getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Error writing to disk: \n" + e.getStackTrace().toString());
+    }
+
 
     public static Plugin getInstance() {
         return Bukkit.getPluginManager().getPlugin("CX");
     }
 
     public void onEnable() {
-        this.getDataFolder().mkdir();
-        this.getCommand("chome").setExecutor(new ChomeManager());
-        this.getCommand("chome").setTabCompleter(new CHomeTabCompleter());
-        this.getServer().getPluginManager().registerEvents(new DeathPointListener(), this);
+        getDataFolder().mkdir();
 
-        this.getCommand("say").setExecutor(new SayExec());
-        this.getServer().getPluginManager().registerEvents(new ChatFormatListener(), this);
+        getCommand("chome").setExecutor(new ChomeManager());
+        getCommand("chome").setTabCompleter(new CHomeTabCompleter());
+        getServer().getPluginManager().registerEvents(new DeathPointListener(), this);
 
-        this.getCommand("cgroup").setExecutor(new CGroupCmdParse());
-        this.getCommand("cgroup").setTabCompleter(new Completer());
-        this.getCommand("cch").setExecutor(new CchParse());
-        this.getCommand("cch").setTabCompleter(new CchCompleter());
+        getCommand("say").setExecutor(new SayExec());
+        getServer().getPluginManager().registerEvents(new ChatFormatListener(), this);
+
+        getCommand("cgroup").setExecutor(new CGroupCmdParse());
+        getCommand("cgroup").setTabCompleter(new Completer());
+        getCommand("cch").setExecutor(new CchParse());
+        getCommand("cch").setTabCompleter(new CchCompleter());
         ConfigurationSerialization.registerClass(Group.class, "Group");
 
-        this.getCommand("cmenu").setExecutor(new CMenuExec());
-        this.getServer().getPluginManager().registerEvents(new MenuListListener(), this);
+        getCommand("cmenu").setExecutor(new CMenuExec());
+        getServer().getPluginManager().registerEvents(new MenuListListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new SpectatorTPListener(), this);
-        this.getCommand("enderchest").setExecutor(new EnderchestExecutor());
-        this.getCommand("invsee").setExecutor(new InvseeExecutor());
-        this.getCommand("beezooka").setExecutor(new BeeExecutor());
+        MiscManager.register(this);
+        Recipes.register();
 
-        Bukkit.addRecipe(getRecipe());
-
-        //plugin = this;
-        getPrinter().log(Level.INFO, "(§aSTATUS§f) §9Plugin successfully enabled");
+        logInfo("(§aSTATUS§f) §9Plugin successfully enabled");
     }
 
     public void onDisable() {
@@ -70,16 +73,8 @@ public class Main extends JavaPlugin {
         HandlerList.unregisterAll(new ChatFormatListener());
         HandlerList.unregisterAll(new MenuListListener());
         HandlerList.unregisterAll(new SpectatorTPListener());
-        getPrinter().log(Level.INFO, "CX | §aSTATUS§f >> §9Plugin successfully disabled");
+        logInfo("CX | §aSTATUS§f >> §9Plugin successfully disabled");
     }
 
-    private ShapedRecipe getRecipe() {
-        ItemStack result = new ItemStack(Material.BUNDLE);
-        NamespacedKey key = new NamespacedKey(this, "bundle");
-        ShapedRecipe recipe = new ShapedRecipe(key, result);
-        recipe.shape("SRS", "R R", "RRR");
-        recipe.setIngredient('S', Material.STRING);
-        recipe.setIngredient('R', Material.RABBIT_HIDE);
-        return recipe;
-    }
+
 }

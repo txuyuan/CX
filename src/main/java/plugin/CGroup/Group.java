@@ -29,9 +29,7 @@ public class Group implements ConfigurationSerializable {
     }
 
     public static Boolean aliasExists(String alias, FileConfiguration data) {
-        if (data.getConfigurationSection("groups") != null && data.getConfigurationSection("groups").getKeys(false).contains(alias))
-            return true;
-        return false;
+        return data.getConfigurationSection("groups") != null && data.getConfigurationSection("groups").getKeys(false).contains(alias);
     }
 
     public static Group deserialize(Map<String, Object> map) {
@@ -58,7 +56,7 @@ public class Group implements ConfigurationSerializable {
         newName = newName.replace("_", " ");
         if (data.getConfigurationSection("groups") != null)
             for (String existingAlias : data.getConfigurationSection("groups").getKeys(false))
-                if (((Group) data.getObject("groups." + existingAlias, (Class) Group.class)).getName().toLowerCase().equals(newName.toLowerCase()))
+                if (((Group) data.getObject("groups." + existingAlias, (Class) Group.class)).getName().equalsIgnoreCase(newName))
                     return false;
         this.name = newName;
         return true;
@@ -90,9 +88,7 @@ public class Group implements ConfigurationSerializable {
 
     public Boolean setColour(String newColour) {
         this.colour = newColour;
-        if (this.getFormatColour() != 'x')
-            return true;
-        return false;
+        return this.getFormatColour() != 'x';
     }
 
     public Character getFormatColour() {
@@ -145,9 +141,7 @@ public class Group implements ConfigurationSerializable {
     }
 
     public Boolean ownedBy(String queryOwner) {
-        if (queryOwner.equals(this.owner))
-            return true;
-        return false;
+        return queryOwner.equals(this.owner);
     }
 
     public ArrayList<String> getMembers() {

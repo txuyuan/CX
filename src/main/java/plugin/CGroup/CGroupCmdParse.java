@@ -14,7 +14,7 @@ public class CGroupCmdParse implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (!player.hasPermission("cgroup.use")) {
-            sender.sendMessage("§c(Error)§f You do not have permission to use CGroup");
+            sender.sendMessage("§c(Error)§f You do not have permission to do this");
             return true;
         }
         if (args.length < 1) {

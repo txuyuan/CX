@@ -8,7 +8,6 @@ import plugin.CX.Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class ChannelManager {
     public static String switchChannel(Player player, String[] args) {
@@ -18,15 +17,14 @@ public class ChannelManager {
             }
             case 2: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 String channel = args[1].toUpperCase();
-                data.set("players." + player.getUniqueId().toString() + ".channel", (Object) "ALL");
+                data.set("players." + player.getUniqueId() + ".channel", "ALL");
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
                 Group group = Group.getGroup(channel, data);
                 if (channel.equals("ALL"))
@@ -34,13 +32,13 @@ public class ChannelManager {
                 if (group == null)
                     return "§c(Error)§f A group with alias §f§o" + channel + "§c does not exist" + "\n§b(Status)§f Now messaging in §eGlobal";
                 if (group.getMembers().contains(player.getUniqueId().toString()) || player.isOp()) {
-                    data.set("players." + player.getUniqueId().toString() + ".channel", (Object) channel);
+                    data.set("players." + player.getUniqueId() + ".channel", channel);
                     try {
                         data.save(dataFile);
                     } catch (IOException exception2) {
                         exception2.printStackTrace();
-                        Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                        return "§c(Error)§f Failed to write to disk";
+                        Main.logDiskError(exception2);
+                        return "§c(Error)§f Error writing to disk";
                     }
                     return "§b(Status)§f Now messaging in " + group.getFormattedName();
                 }

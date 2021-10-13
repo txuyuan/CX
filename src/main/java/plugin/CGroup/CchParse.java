@@ -11,7 +11,6 @@ import plugin.CX.Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class CchParse implements CommandExecutor {
 
@@ -22,7 +21,7 @@ public class CchParse implements CommandExecutor {
         }
         Player player = (Player) sender;
         if (!player.hasPermission("cgroup.use")) {
-            sender.sendMessage("§c(Error)§f You do not have permission to use CGroup");
+            sender.sendMessage("§c(Error)§f You do not have permission to do this");
             return true;
         }
         if (args.length == 0) {
@@ -32,15 +31,14 @@ public class CchParse implements CommandExecutor {
 
         if (args.length == 1) {
             File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-            FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+            FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
             String channel = args[0].toUpperCase();
-            data.set("players." + player.getUniqueId().toString() + ".channel", (Object) "ALL");
+            data.set("players." + player.getUniqueId() + ".channel", "ALL");
             try {
                 data.save(dataFile);
             } catch (IOException exception) {
-                exception.printStackTrace();
-                Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                player.sendMessage("§c(Error)§f Failed to write to disk");
+                Main.logDiskError(exception);
+                player.sendMessage("§c(Error)§f Error writing to disk");
                 return true;
             }
             Group group = Group.getGroup(channel, data);
@@ -53,13 +51,12 @@ public class CchParse implements CommandExecutor {
                 return true;
             }
             if (group.getMembers().contains(player.getUniqueId().toString()) || player.isOp()) {
-                data.set("players." + player.getUniqueId().toString() + ".channel", (Object) channel);
+                data.set("players." + player.getUniqueId() + ".channel", channel);
                 try {
                     data.save(dataFile);
                 } catch (IOException exception2) {
-                    exception2.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    player.sendMessage("§c(Error)§f Failed to write to disk");
+                    Main.logDiskError(exception2);
+                    player.sendMessage("§c(Error)§f Error writing to disk");
                     return true;
                 }
                 player.sendMessage("§b(Status)§f Now messaging in " + group.getFormattedName());

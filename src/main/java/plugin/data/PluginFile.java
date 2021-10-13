@@ -6,13 +6,12 @@ import plugin.CX.Main;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class PluginFile {
 
     public static FileConfiguration getFile(String name) {
         File file = new File("./plugins/CX", name);
-        FileConfiguration fConfig = (FileConfiguration) YamlConfiguration.loadConfiguration(file);
+        FileConfiguration fConfig = YamlConfiguration.loadConfiguration(file);
         return fConfig;
     }
 
@@ -21,7 +20,7 @@ public class PluginFile {
             File file = new File("./plugins/CX", name);
             fConfig.save(file);
         } catch (IOException exception) {
-            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f §cError writing to disk");
+            Main.logDiskError(exception);
             exception.printStackTrace();
         }
     }

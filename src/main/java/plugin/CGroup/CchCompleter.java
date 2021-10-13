@@ -24,10 +24,10 @@ public class CchCompleter implements TabCompleter {
         Player player = (Player) sender;
         String playerUUID = player.getUniqueId().toString();
 
-        FileConfiguration data = YamlConfiguration.loadConfiguration((File) new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml"));
+        FileConfiguration data = YamlConfiguration.loadConfiguration(new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml"));
         if (args.length == 1) {
             if (data.getConfigurationSection("groups") != null) {
-                completions = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> (Group) data.getObject("groups." + key, Group.class)).map(group -> group.getAlias()).collect(Collectors.toList());
+                completions = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).map(group -> group.getAlias()).collect(Collectors.toList());
                 completions.add("ALL");
             } else
                 completions = Arrays.asList("ALL");

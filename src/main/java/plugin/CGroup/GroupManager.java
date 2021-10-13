@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class GroupManager {
     public static String parseGroup(Player sender, String[] args) {
@@ -44,7 +43,7 @@ public class GroupManager {
             case 2:
                 return "§c(Error)§f Please specify a group (by alias)\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
             case 3: {
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml"));
+                FileConfiguration data = YamlConfiguration.loadConfiguration(new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml"));
                 Group group = Group.getGroup(args[2], data);
                 UUID ownerUUID = UUID.fromString(group.getOwner());
                 OfflinePlayer offlineOwner = Bukkit.getOfflinePlayer(ownerUUID);
@@ -86,7 +85,7 @@ public class GroupManager {
                 return "§c(Error)§f Please choose a group colour\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
             case 5: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 String uuid = sender.getUniqueId().toString();
                 ArrayList<String> placeholder = new ArrayList<String>();
                 ArrayList<String> initialMembers = new ArrayList<String>();
@@ -106,13 +105,12 @@ public class GroupManager {
                     default: {
                         if (!group.setColour(args[4]))
                             return "§c(Error)§f The colour §f" + args[4] + " is invalid";
-                        data.set("groups." + group.getAlias(), (Object) group);
+                        data.set("groups." + group.getAlias(), group);
                         try {
                             data.save(dataFile);
                         } catch (IOException exception) {
-                            exception.printStackTrace();
-                            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                            return "§c(Error)§f Failed to write to disk";
+                            Main.logDiskError(exception);
+                            return "§c(Error)§f Error writing to disk";
                         }
                         return "§b(Status) You successfully created a group\n§e(Help)§f Name §f>> " + group.getFormattedName() + "\n§e(Help)§f Alias §f>> " + group.getFormattedAlias();
                     }
@@ -129,7 +127,7 @@ public class GroupManager {
                 return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 3: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 String grpName = group.getFormattedName();
                 String grpOwner = group.getOwner();
@@ -142,9 +140,8 @@ public class GroupManager {
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
 
                 for (String playerUUID : members) {
@@ -160,9 +157,8 @@ public class GroupManager {
                         try {
                             data.save(dataFile);
                         } catch (IOException exception) {
-                            exception.printStackTrace();
-                            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                            return "§c(Error)§f Failed to write to disk";
+                            Main.logDiskError(exception);
+                            return "§c(Error)§f Error writing to disk";
                         }
                     }
                 }
@@ -180,19 +176,18 @@ public class GroupManager {
                 return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 3: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 if (group.ownedBy(sender.getUniqueId().toString()))
                     return "§c(Error)§f You are the owner of " + group.getFormattedName() + "\n§e(Help)§f You must disband the group or transfer ownership before leaving";
                 if (!group.removeMember(sender.getName()))
                     return "§c(Error)§f You are not a member of §e" + group.getFormattedName();
-                data.set("groups." + group.getAlias(), (Object) group);
+                data.set("groups." + group.getAlias(), group);
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
 
                 for (String playerUUID : group.getMembers()) {
@@ -206,9 +201,8 @@ public class GroupManager {
                     try {
                         data.save(dataFile);
                     } catch (IOException exception) {
-                        exception.printStackTrace();
-                        Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                        return "§c(Error)§f Failed to write leavlist to disk";
+                        Main.logDiskError(exception);
+                        return "§c(Error)§f Error writing to disk";
                     }
                 }
 
@@ -227,20 +221,19 @@ public class GroupManager {
                 return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 4: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 if (!group.ownedBy(sender.getUniqueId().toString()))
                     return "§c(Error)§f You are not the owner of " + group.getFormattedName();
                 String removedMemberName = args[3];
                 if (!group.removeMember(removedMemberName))
                     return "CGROUP | §aERROR§f >> §e" + removedMemberName + " §cis not a member of " + group.getFormattedName();
-                data.set("groups." + group.getAlias(), (Object) group);
+                data.set("groups." + group.getAlias(), group);
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
                 for (String playerUUID : group.getMembers()) {
                     if (!(playerUUID == sender.getUniqueId().toString())) {
@@ -255,9 +248,8 @@ public class GroupManager {
                         try {
                             data.save(dataFile);
                         } catch (IOException exception) {
-                            exception.printStackTrace();
-                            Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                            return "§c(Error)§f Failed to write leavlist to disk";
+                            Main.logDiskError(exception);
+                            return "§c(Error)§f Error writing to disk";
                         }
                     }
                 }
@@ -276,7 +268,7 @@ public class GroupManager {
                 return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 4: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
-                FileConfiguration data = (FileConfiguration) YamlConfiguration.loadConfiguration(dataFile);
+                FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
                 Group group = Group.getGroup(args[2], data);
                 if (!group.ownedBy(sender.getUniqueId().toString()))
                     return "§c(Error)§f You are not the owner of " + group.getFormattedName();
@@ -285,13 +277,12 @@ public class GroupManager {
                 if (!group.getMembers().contains(transferredOwner))
                     return "CGROUP | §aERROR§f >> §e" + transferredOwnerName + " §c is not a member of " + group.getFormattedName();
                 group.setOwner(transferredOwner);
-                data.set("groups." + group.getAlias(), (Object) group);
+                data.set("groups." + group.getAlias(), group);
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
-                    exception.printStackTrace();
-                    Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                    return "§c(Error)§f Failed to write to disk";
+                    Main.logDiskError(exception);
+                    return "§c(Error)§f Error writing to disk";
                 }
 
                 for (String playerUUID : group.getMembers()) {
@@ -307,9 +298,8 @@ public class GroupManager {
                     try {
                         data.save(dataFile);
                     } catch (IOException exception) {
-                        exception.printStackTrace();
-                        Main.getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Failed to write to disk");
-                        return "§c(Error)§f Failed to write leavlist to disk";
+                        Main.logDiskError(exception);
+                        return "§c(Error)§f Error writing to disk";
                     }
                 }
 

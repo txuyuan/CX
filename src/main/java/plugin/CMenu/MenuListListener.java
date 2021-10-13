@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
 
 public class MenuListListener implements Listener {
 
@@ -21,6 +20,8 @@ public class MenuListListener implements Listener {
     public void onPing(ServerListPingEvent event) {
         FileConfiguration fConfig = PluginFile.getFile("cMenuFile");
         List<String> idList = (List<String>) fConfig.getList("players");
+        if (idList == null)
+            return;
         List<Player> pList = new ArrayList<>();
         for (String str : idList)
             if (Bukkit.getPlayer(UUID.fromString(str)) != null)
@@ -31,7 +32,7 @@ public class MenuListListener implements Listener {
             if (pList.contains(player)) it.remove();
         }
 
-        Main.getPrinter().log(Level.INFO, "§7Ping from " + event.getAddress());
+        Main.logInfo("§7Ping from " + event.getAddress());
     }
 
 }

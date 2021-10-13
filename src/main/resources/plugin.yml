@@ -2,7 +2,7 @@ main: plugin.CX.Main
 name: CX
 version: 2.7.1-beta
 author: Xuyuan
-api-version: 1.17
+api-version: 1.17.1
 commands:
   chome:
     description: CHome for homes, death and shop
@@ -21,6 +21,10 @@ commands:
     aliases: ec
   invsee:
     description: Access player inventory
+  beezooka:
+    description: Fires a bee that explodes
+  anvil:
+    description: Opens Anvil GUI
 permissions:
   chome.home:
     description: Teleport to home (chome home)

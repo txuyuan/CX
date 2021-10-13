@@ -8,11 +8,11 @@ import plugin.CX.Main;
 
 public class DelayManager {
 
-    public static void beeKill(Entity bee){
+    public static void beeKill(Entity bee) {
         new BukkitRunnable() {
             public void run() {
                 Location loc = bee.getLocation();
-                ((Damageable)bee).damage(100);
+                ((Damageable) bee).damage(100);
                 loc.getWorld().createExplosion(loc, 0F);
             }
         }.runTaskLater(Main.getInstance(), 60);
