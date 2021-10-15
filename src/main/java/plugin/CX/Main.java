@@ -1,6 +1,7 @@
 package plugin.CX;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -14,9 +15,6 @@ import plugin.CHome.Commands.ChomeManager;
 import plugin.CHome.DeathPointListener;
 import plugin.CMenu.CMenuExec;
 import plugin.CMenu.MenuListListener;
-import plugin.CTab.commands.CTabCompleter;
-import plugin.CTab.commands.TabExecutor;
-import plugin.CTab.listeners.PlayerJoinListener;
 import plugin.misc.MiscManager;
 import plugin.misc.listeners.SpectatorTPListener;
 import plugin.misc.others.Recipes;
@@ -45,10 +43,6 @@ public class Main extends JavaPlugin {
         getCommand("cmenu").setExecutor(new CMenuExec());
         getServer().getPluginManager().registerEvents(new MenuListListener(), this);
 
-        getCommand("ctab").setExecutor(new TabExecutor());
-        getCommand("ctab").setTabCompleter(new CTabCompleter());
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-
         MiscManager.register(this);
         Recipes.register();
 
@@ -75,6 +69,5 @@ public class Main extends JavaPlugin {
     public static void logDiskError(IOException e) {
         getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Error writing to disk: \n" + e.getStackTrace().toString());
     }
-
 
 }
