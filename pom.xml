@@ -6,7 +6,7 @@
 
     <groupId>me.xuyuan</groupId>
     <artifactId>CX</artifactId>
-    <version>2.7.1-alpha</version>
+    <version>2.7.1</version>
 
     <build>
         <plugins>

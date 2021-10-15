@@ -1,6 +1,6 @@
 main: plugin.CX.Main
 name: CX
-version: 2.7.1-alpha
+version: 2.7.1
 author: Xuyuan
 api-version: 1.17
 commands:

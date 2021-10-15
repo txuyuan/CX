@@ -1,4 +1,4 @@
-package plugin.CGroup;
+package plugin.CGroup.types;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

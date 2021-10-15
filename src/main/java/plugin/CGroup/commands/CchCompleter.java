@@ -1,4 +1,4 @@
-package plugin.CGroup;
+package plugin.CGroup.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -7,6 +7,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import plugin.CGroup.types.Group;
 
 import java.io.File;
 import java.util.Arrays;

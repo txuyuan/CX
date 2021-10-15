@@ -1,4 +1,4 @@
-package plugin.CHome.Commands;
+package plugin.CHome.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

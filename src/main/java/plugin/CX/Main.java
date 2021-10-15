@@ -1,21 +1,24 @@
 package plugin.CX;
 
 import org.bukkit.Bukkit;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import plugin.CChat.ChatFormatListener;
-import plugin.CChat.SayExec;
-import plugin.CGroup.*;
-import plugin.CHome.CHomeTabCompleter;
-import plugin.CHome.Commands.ChomeManager;
-import plugin.CHome.DeathPointListener;
+import plugin.CChat.listeners.ChatFormatListener;
+import plugin.CChat.commands.SayExec;
+import plugin.CGroup.commands.CGroupCmdParse;
+import plugin.CGroup.commands.CGroupCompleter;
+import plugin.CGroup.commands.CchCompleter;
+import plugin.CGroup.commands.CchParse;
+import plugin.CGroup.types.Group;
+import plugin.CHome.commands.CHomeTabCompleter;
+import plugin.CHome.commands.ChomeManager;
+import plugin.CHome.listeners.DeathPointListener;
 import plugin.CMenu.CMenuExec;
 import plugin.CMenu.MenuListListener;
 import plugin.misc.MiscManager;
+import plugin.misc.compatibility.ThirdLife.ThirdLifeCompatibility;
 import plugin.misc.listeners.SpectatorTPListener;
 import plugin.misc.others.Recipes;
 
@@ -35,7 +38,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChatFormatListener(), this);
 
         getCommand("cgroup").setExecutor(new CGroupCmdParse());
-        getCommand("cgroup").setTabCompleter(new Completer());
+        getCommand("cgroup").setTabCompleter(new CGroupCompleter());
         getCommand("cch").setExecutor(new CchParse());
         getCommand("cch").setTabCompleter(new CchCompleter());
         ConfigurationSerialization.registerClass(Group.class, "Group");
@@ -45,6 +48,7 @@ public class Main extends JavaPlugin {
 
         MiscManager.register(this);
         Recipes.register();
+        ThirdLifeCompatibility.check();
 
         logInfo("§b(Status)§f Plugin enabled");
     }
@@ -54,6 +58,7 @@ public class Main extends JavaPlugin {
         HandlerList.unregisterAll(new ChatFormatListener());
         HandlerList.unregisterAll(new MenuListListener());
         HandlerList.unregisterAll(new SpectatorTPListener());
+        ThirdLifeCompatibility.cleanup();
         logInfo("§b(Status)§f Plugin disabled");
     }
 
@@ -69,5 +74,7 @@ public class Main extends JavaPlugin {
     public static void logDiskError(IOException e) {
         getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Error writing to disk: \n" + e.getStackTrace().toString());
     }
+
+    public static void logTest(String msg){ logInfo("§aTest: " + msg);}
 
 }

@@ -1,9 +1,10 @@
-package plugin.CGroup;
+package plugin.CGroup.managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import plugin.CGroup.types.Group;
 import plugin.CX.Main;
 
 import java.io.File;
@@ -57,7 +58,7 @@ public class InviteManager {
                     default: {
                         Player invitee = Bukkit.getPlayer(invitedPlayerName);
                         if (invitee != null)
-                            invitee.sendMessage("CGROUP | §dINFO§f >> You have been invited to join " + group.getFormattedName() + " by §e" + player.getDisplayName()
+                            invitee.sendMessage("CGROUP | §dINFO§f >> You have been invited to join " + group.getFormattedName() + " by §e" + player.displayName()
                                     + "\n§fCGROUP | §dINFO§f >> Use §7/cgroup invite accept " + group.getAlias() + "§f to accept invitation");
                         data.set("groups." + group.getAlias(), group);
                         try {
