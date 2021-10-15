@@ -15,7 +15,7 @@ public class BeeExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
-        if ((commandSender instanceof Player) && !commandSender.hasPermission("cx.enderChest")) {
+        if ((commandSender instanceof Player) && !commandSender.hasPermission("cx.beezooka")) {
             commandSender.sendMessage("§c(Error)§f You do not have permission to do this");
             return true;
         }

@@ -1,8 +1,6 @@
 package plugin.misc;
 
-import org.bukkit.plugin.Plugin;
 import plugin.CX.Main;
-import plugin.misc.commands.AnvilExecutor;
 import plugin.misc.commands.BeeExecutor;
 import plugin.misc.commands.EnderchestExecutor;
 import plugin.misc.commands.InvseeExecutor;
@@ -15,7 +13,7 @@ public class MiscManager{
         plugin.getCommand("enderchest").setExecutor(new EnderchestExecutor());
         plugin.getCommand("invsee").setExecutor(new InvseeExecutor());
         plugin.getCommand("beezooka").setExecutor(new BeeExecutor());
-        plugin.getCommand("anvil").setExecutor(new AnvilExecutor());
+        //plugin.getCommand("anvil").setExecutor(new AnvilExecutor());
     }
 
 }

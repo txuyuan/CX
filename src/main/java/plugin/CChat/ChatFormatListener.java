@@ -1,6 +1,7 @@
 package plugin.CChat;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -88,9 +89,11 @@ public class ChatFormatListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
+        Player player = event.getPlayer();
+        
         File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
         FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
-        String channelAlias = data.getString("players." + event.getPlayer().getUniqueId() + ".channel", "ALL");
+        String channelAlias = data.getString("players." + player.getUniqueId() + ".channel", "ALL");
         String channel;
         if (channelAlias.equals("ALL"))
             channel = "§6§oALL§r";
@@ -98,44 +101,47 @@ public class ChatFormatListener implements Listener {
             Group group = Group.getGroup(channelAlias, data);
             if (group == null) {
                 channel = "§6§oALL§r";
-                data.set("players." + event.getPlayer().getUniqueId() + ".channel", "ALL");
+                data.set("players." + player.getUniqueId() + ".channel", "ALL");
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
                     exception.printStackTrace();
                     Main.logDiskError(exception);
-                    event.getPlayer().sendMessage("§c(Error)§f Error writing to disk");
+                    player.sendMessage("§c(Error)§f Error writing to disk");
                 }
-                event.getPlayer().sendMessage("§9(Info)§f The channel you were in was deleted\n§b(Status)§f Now messaging in §eGlobal");
+                player.sendMessage("§9(Info)§f The channel you were in was deleted\n§b(Status)§f Now messaging in §eGlobal");
                 event.setCancelled(true);
-            } else if (!group.getMembers().contains(event.getPlayer().getUniqueId().toString())) {
+            } else if (!group.getMembers().contains(player.getUniqueId().toString())) {
                 channel = "§6§oALL§r";
-                data.set("players." + event.getPlayer().getUniqueId() + ".channel", "ALL");
+                data.set("players." + player.getUniqueId() + ".channel", "ALL");
                 try {
                     data.save(dataFile);
                 } catch (IOException exception) {
                     exception.printStackTrace();
                     Main.logDiskError(exception);
-                    event.getPlayer().sendMessage("§c(Error)§f Error writing to disk");
+                    player.sendMessage("§c(Error)§f Error writing to disk");
                 }
-                event.getPlayer().sendMessage("§9(Info)§f The channel you were in was deleted, or you were removed\n§b(Status)§f Now messaging in §eGlobal");
+                player.sendMessage("§9(Info)§f The channel you were in was deleted, or you were removed\n§b(Status)§f Now messaging in §eGlobal");
                 event.setCancelled(true);
             } else {
                 channel = group.getFormattedAlias();
                 Set<Player> recipients = event.getRecipients();
                 recipients.clear();
-                group.getMembers().stream().map(UUID::fromString).map(Bukkit::getPlayer).filter(player -> player != null).forEach(player -> recipients.add(player));
+                recipients = group.getMembers().stream().map(UUID::fromString).map(Bukkit::getPlayer).filter(groupPlayer -> groupPlayer != null).collect(Collectors.toSet());
             }
         }
+        
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
-        event.setFormat(event.getPlayer().hasPermission("cx.opName") ? ("(" + channel + "§f | §c%s§f) %s") : ("(" + channel + "§f | §a%s§f) %s"));
+        
+        String playerDisplayName = ChatColor.translateAlternateColorCodes('§', player.getDisplayName());
+        event.setFormat("(" + channel + "§f | " + (player.hasPermission("cx.opName") ? "§c" : "§a") + playerDisplayName + "§f) %s");
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Main.logInfo(player.getDisplayName() + " logged in at" + player.getLocation());
-        event.setJoinMessage("§a(Join)§6 " + player.getDisplayName() + "§f joined the game");
+        event.setJoinMessage("§a(Join)§6 " + ChatColor.translateAlternateColorCodes('§', player.getDisplayName()) + "§f joined the game");
         notifs(event, player);
     }
 
@@ -143,6 +149,6 @@ public class ChatFormatListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         Main.logInfo(player.getDisplayName() + " logged out at" + player.getLocation());
-        event.setQuitMessage("§a(Leave)§6 " + player.getDisplayName() + "§f left the game");
+        event.setQuitMessage("§a(Leave)§6 " + ChatColor.translateAlternateColorCodes('§', player.getDisplayName()) + "§f left the game");
     }
 }

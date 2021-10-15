@@ -1,6 +1,5 @@
 package plugin.misc.commands;
 
-import com.earth2me.essentials.commands.EssentialsCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,6 +23,7 @@ public class AnvilExecutor implements CommandExecutor {
 
         Player player = (Player)sender;
 
+        //TODO: Properly implement anvil
 
         Inventory anvilInv = Bukkit.createInventory(null, InventoryType.ANVIL);
         player.openInventory(anvilInv);

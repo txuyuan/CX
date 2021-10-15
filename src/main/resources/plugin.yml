@@ -1,8 +1,8 @@
 main: plugin.CX.Main
 name: CX
-version: 2.7.1-beta
+version: 2.7.1-alpha
 author: Xuyuan
-api-version: 1.17.1
+api-version: 1.17
 commands:
   chome:
     description: CHome for homes, death and shop
@@ -16,6 +16,8 @@ commands:
     description: Say message in chat. Usage | /say <message>
   cmenu:
     description: Operate CMenu
+  ctab:
+    description: Operates CTab
   enderchest:
     description: Access player enderchest
     aliases: ec
@@ -23,8 +25,8 @@ commands:
     description: Access player inventory
   beezooka:
     description: Fires a bee that explodes
-  anvil:
-    description: Opens Anvil GUI
+#  anvil:
+#    description: Opens Anvil GUI
 permissions:
   chome.home:
     description: Teleport to home (chome home)
@@ -52,6 +54,15 @@ permissions:
     default: op
   cx.allowSpecTp:
     desription: Allows player to teleport using spectator functions
+    default: op
+  cx.tablist:
+    description: Operate CTab
+    default: op
+  cx.anvil:
+    description: Use /anvil
+    default: op
+  cx.beezooka:
+    description: Use /beezooka
     default: op
   cx.enderchest:
     description: Allows player to access enderchest of any player
