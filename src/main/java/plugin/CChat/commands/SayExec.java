@@ -1,4 +1,4 @@
-package plugin.CChat;
+package plugin.CChat.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

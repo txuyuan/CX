@@ -1,10 +1,13 @@
-package plugin.CGroup;
+package plugin.CGroup.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import plugin.CGroup.managers.ChannelManager;
+import plugin.CGroup.managers.GroupManager;
+import plugin.CGroup.managers.InviteManager;
 
 public class CGroupCmdParse implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String lbl, String[] args) {

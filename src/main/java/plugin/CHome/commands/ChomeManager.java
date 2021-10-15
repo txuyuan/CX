@@ -1,4 +1,4 @@
-package plugin.CHome.Commands;
+package plugin.CHome.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ public class ChomeManager implements CommandExecutor {
 
     public boolean onCommand(CommandSender s, Command c, String label, String[] args) {
 
-        if (args.length < 1)
+        if (args.length == 0)
             s.sendMessage("§c(Error)§f No arguments specified");
 
         if (s instanceof Player) {

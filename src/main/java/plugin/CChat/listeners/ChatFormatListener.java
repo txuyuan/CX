@@ -1,7 +1,6 @@
-package plugin.CChat;
+package plugin.CChat.listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -10,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import plugin.CGroup.Group;
+import plugin.CGroup.types.Group;
 import plugin.CX.Main;
 
 import java.io.File;
@@ -132,16 +131,15 @@ public class ChatFormatListener implements Listener {
         }
         
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
-        
-        String playerDisplayName = ChatColor.translateAlternateColorCodes('§', player.getDisplayName());
-        event.setFormat("(" + channel + "§f | " + (player.hasPermission("cx.opName") ? "§c" : "§a") + playerDisplayName + "§f) %s");
+
+        event.setFormat("(" + channel + "§f | " + (player.hasPermission("cx.opName") ? "§c" : "§a") + player.getDisplayName() + "§f) " + event.getMessage());
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Main.logInfo(player.getDisplayName() + " logged in at" + player.getLocation());
-        event.setJoinMessage("§a(Join)§6 " + ChatColor.translateAlternateColorCodes('§', player.getDisplayName()) + "§f joined the game");
+        Main.logInfo(player.getDiscoveredRecipes() + " logged in at" + player.getLocation());
+        event.setJoinMessage("§a(Join)§6 " + player.getDisplayName() + "§f joined the game");
         notifs(event, player);
     }
 
@@ -149,6 +147,6 @@ public class ChatFormatListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         Main.logInfo(player.getDisplayName() + " logged out at" + player.getLocation());
-        event.setQuitMessage("§a(Leave)§6 " + ChatColor.translateAlternateColorCodes('§', player.getDisplayName()) + "§f left the game");
+        event.setQuitMessage("§a(Leave)§6 " + player.getDisplayName() + "§f left the game");
     }
 }
