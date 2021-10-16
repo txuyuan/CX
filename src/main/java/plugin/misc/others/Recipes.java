@@ -9,7 +9,7 @@ import plugin.CX.Main;
 
 public class Recipes {
 
-    public static void register(){
+    public static void register() {
         ItemStack result = new ItemStack(Material.BUNDLE);
         NamespacedKey key = new NamespacedKey(Main.getInstance(), "bundle");
         ShapedRecipe recipe = new ShapedRecipe(key, result);

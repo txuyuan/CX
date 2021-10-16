@@ -136,7 +136,7 @@ public class PlayerChome {
 
     public static void setDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
-        Main.logInfo("(CHOME | DEATH) " + player.getName() + " has died at " + player.getLocation());
+        Main.logInfo(player.getName() + " has died at " + player.getLocation());
         saveLocation(player.getLocation(), player.getUniqueId() + ".death", player);
         setDeathUsed(player, false);
     }
