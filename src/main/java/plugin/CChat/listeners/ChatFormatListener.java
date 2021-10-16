@@ -89,7 +89,7 @@ public class ChatFormatListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        
+
         File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
         FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
         String channelAlias = data.getString("players." + player.getUniqueId() + ".channel", "ALL");
@@ -129,7 +129,7 @@ public class ChatFormatListener implements Listener {
                 recipients = group.getMembers().stream().map(UUID::fromString).map(Bukkit::getPlayer).filter(groupPlayer -> groupPlayer != null).collect(Collectors.toSet());
             }
         }
-        
+
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
 
         event.setFormat("(" + channel + "§f | " + (player.hasPermission("cx.opName") ? "§c" : "§a") + player.getDisplayName() + "§f) " + event.getMessage());
@@ -138,7 +138,7 @@ public class ChatFormatListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        Main.logInfo(player.getDiscoveredRecipes() + " logged in at" + player.getLocation());
+        Main.logInfo(player.getDisplayName() + " logged in at" + player.getLocation());
         event.setJoinMessage("§a(Join)§6 " + player.getDisplayName() + "§f joined the game");
         notifs(event, player);
     }

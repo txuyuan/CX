@@ -12,16 +12,16 @@ public class AnvilExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if(!sender.hasPermission("cx.anvil")){
+        if (!sender.hasPermission("cx.anvil")) {
             sender.sendMessage("§c(Error)§f You do not have permission to do this");
             return true;
         }
-        if(!(sender instanceof Player)){
+        if (!(sender instanceof Player)) {
             sender.sendMessage("§c(Error)§f You must be a player to do this");
             return true;
         }
 
-        Player player = (Player)sender;
+        Player player = (Player) sender;
 
         //TODO: Properly implement anvil
 

@@ -9,7 +9,7 @@ import plugin.CX.Main;
 public class PlayerJoinListener implements Listener {
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event){
+    public void onJoin(PlayerJoinEvent event) {
         PermissionAttachment playerAttach = event.getPlayer().addAttachment(Main.getInstance(), 100);
         playerAttach.setPermission("cx.opName", false);
     }

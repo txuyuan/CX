@@ -8,18 +8,17 @@ public class ThirdLifeCompatibility {
 
     private static boolean isThirdLife;
 
-    public static void check(){
-        if(Bukkit.getPluginManager().getPlugin("ThirdLife") != null){
+    public static void check() {
+        if (Bukkit.getPluginManager().getPlugin("ThirdLife") != null) {
             isThirdLife = true;
             Main.getInstance().getServer().getPluginManager().registerEvents(new PlayerJoinListener(), Main.getInstance());
-        }else
+        } else
             isThirdLife = false;
     }
 
-    public static void cleanup(){
-        if(isThirdLife)
+    public static void cleanup() {
+        if (isThirdLife)
             HandlerList.unregisterAll(new PlayerJoinListener());
-
     }
 
 }
