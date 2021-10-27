@@ -16,47 +16,27 @@ public class ChomeManager implements CommandExecutor {
 
         if (s instanceof Player) {
             Player player = (Player) s;
-            switch (args[0].toLowerCase()) {
-                case "sethome":
-                    player.sendMessage(PlayerChome.sethome(player));
-                    break;
-                case "home":
-                    PlayerChome.home(player, args);
-                    break;
-                case "death":
-                    player.sendMessage(PlayerChome.death(player));
-                    break;
-                case "setshop":
-                    player.sendMessage(PlayerChome.setshop(player));
-                    break;
-                case "shop":
-                    player.sendMessage(PlayerChome.shop(player));
-                    break;
-                case "help":
-                    String msg = "§e(Help)§f §e§lCHOME v" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "\n" + helpMsg(player.isOp());
-                    player.sendMessage(msg);
-                    break;
-                default:
-                    player.sendMessage("§c(Error) §fUnrecognised argument");
+            switch(args[0].toLowerCase()){
+                case "sethome" -> PlayerChome.sethome(player);
+                case "home" -> PlayerChome.home(player, args);
+                case "death" -> PlayerChome.death(player);
+                case "setshop" -> PlayerChome.setshop(player);
+                case "shop" -> PlayerChome.shop(player);
+                case "help" -> player.sendMessage("§e(Help)§f §e§lCHome v" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "\n" + helpMsg(player.isOp()));
+                default -> player.sendMessage("§c(Error)§f Unrecognised argument");
             }
         } else {
-            switch (args[0].toLowerCase()) {
-                case "home":
-                    ConsoleChome.getLocation(args, "home");
-                    break;
-                case "death":
-                    ConsoleChome.getLocation(args, "death");
-                    break;
-                case "help":
-                    String reply = "§e(Help) §e§lCHOME V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() +
-                            "\n§b--------------------- §eConsole Commands§b ---------------------" +
-                            "\n§e(Help)§7 /chome home <target>§f: Get location of target's home" +
-                            "\n§e(Help)§7 /chome death §f: Get target's last death location" +
-                            "\n§b----------------- §ePlayer Commands (Admin)§b ------------------\n" +
-                            helpMsg(true) +
-                            "\n§b------------------------------------------------------------§f";
-                    Main.logInfo(reply);
-                    break;
+            switch(args[0].toLowerCase()){
+                case "home": ConsoleChome.getLocation(args, "home");
+                case "death": ConsoleChome.getLocation(args, "death");
+                case "help": Main.logInfo("§e(Help) §e§lCHOME V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() +
+                        "\n§b--------------------- §eConsole Commands§b ---------------------" +
+                        "\n§e(Help)§7 /chome home <target>§f: Get location of target's home" +
+                        "\n§e(Help)§7 /chome death §f: Get target's last death location" +
+                        "\n§b----------------- §ePlayer Commands (Admin)§b ------------------\n" +
+                        helpMsg(true) +
+                        "\n§b------------------------------------------------------------§f");
+
             }
         }
         return true;

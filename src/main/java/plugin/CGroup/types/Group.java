@@ -92,44 +92,25 @@ public class Group implements ConfigurationSerializable {
     }
 
     public Character getFormatColour() {
-        String colour;
-        switch (colour = this.colour) {
-            case "dark_aqua":
-                return '3';
-            case "dark_blue":
-                return '1';
-            case "dark_gray":
-                return '8';
-            case "dark_purple":
-                return '5';
-            case "dark_green":
-                return '2';
-            case "yellow":
-                return 'e';
-            case "red":
-                return 'c';
-            case "aqua":
-                return 'b';
-            case "blue":
-                return '9';
-            case "gold":
-                return '6';
-            case "gray":
-                return '7';
-            case "black":
-                return '0';
-            case "green":
-                return 'a';
-            case "white":
-                return 'f';
-            case "light_purple":
-                return 'd';
-            case "dark_red":
-                return '4';
-            default:
-                break;
-        }
-        return 'x';
+        return switch (this.colour) {
+            case "dark_aqua" -> '3';
+            case "dark_blue" -> '1';
+            case "dark_gray" -> '8';
+            case "dark_purple" -> '5';
+            case "dark_green" -> '2';
+            case "yellow" -> 'e';
+            case "red" -> 'c';
+            case "aqua" -> 'b';
+            case "blue" -> '9';
+            case "gold" -> '6';
+            case "gray" -> '7';
+            case "black" -> '0';
+            case "green" -> 'a';
+            case "white" -> 'f';
+            case "light_purple" -> 'd';
+            case "dark_red" -> '4';
+            default -> 'x';
+        };
     }
 
     public String getOwner() {

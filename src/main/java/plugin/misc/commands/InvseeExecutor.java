@@ -29,7 +29,7 @@ public class InvseeExecutor implements CommandExecutor {
             Player player = (Player) commandSender;
             player.openInventory(target.getInventory());
         } else
-            commandSender.sendMessage("§9(Info)§f §7" + args[0] + "§f has this following inventory: " + InvToString.toString(target.getInventory()));
+            commandSender.sendMessage("§3(Info)§f §7" + args[0] + "§f has this following inventory: " + InvToString.toString(target.getInventory()));
 
         return true;
     }

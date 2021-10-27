@@ -24,40 +24,23 @@ public class CGroupCmdParse implements CommandExecutor {
             sender.sendMessage("§c(Error)§f No arguments passed\n\n§3(Info)§f Do §7/cgroup help§f for a list of commands and syntax");
             return true;
         }
-        String s;
-        switch (s = args[0]) {
-            case "invite": {
-                sender.sendMessage(InviteManager.parseInvite(player, args));
-                return true;
-            }
-            case "help": {
-                sender.sendMessage(this.helpParse(args));
-                return true;
-            }
-            case "group": {
-                sender.sendMessage(GroupManager.parseGroup(player, args));
-                return true;
-            }
-            case "channel": {
-                sender.sendMessage(ChannelManager.switchChannel(player, args));
-                return true;
-            }
-            default:
-                break;
-        }
-        sender.sendMessage("§c(Error)§f \"" + args[0] + "\" is not a valid argument" + "\n§3(Info)§f Do §7/cgroup help§f for a list of commands and syntax");
+
+        sender.sendMessage(switch(args[0]){
+            case "invite" -> InviteManager.parseInvite(player, args);
+            case "group" -> GroupManager.parseGroup(player, args);
+            case "channel" -> ChannelManager.switchChannel(player, args);
+            case "help" -> helpParse(args);
+            default -> "§c(Error)§f Invalid argument: " + args[0];
+        });
         return true;
     }
 
     private String helpParse(String[] args) {
         switch (args.length) {
-            case 1:
-                return "§e(Help) §e§lCGroup V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "\n§e(Help)§f /cgroup [group | invite | channel]§f" + "\n§e(Help)§f Use §7/cgroup help [group| invite | channel]§f to get more info";
+            case 1: return "§e(Help) §e§lCGroup V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() + "\n§e(Help)§f /cgroup [group | invite | channel]§f" + "\n§e(Help)§f Use §7/cgroup help [group| invite | channel]§f to get more info";
             case 2: {
-                String s;
-                switch (s = args[1]) {
-                    case "group":
-                        return "§b----------------------- §e(Help | Group)§b -----------------------" +
+                return switch (args[1]) {
+                    case "group" -> "§b----------------------- §e(Help | Group)§b -----------------------" +
                                 "\n>§f §esend <alias> <invitee>§f" +
                                 "\n   > §e<alias>§f   | Alias of group to send invite to" +
                                 "\n   > §e<invitee>§f | Name of player to send invite to" +
@@ -69,8 +52,7 @@ public class CGroupCmdParse implements CommandExecutor {
                                 "\n> §ereject <alias>§f" +
                                 "\n   > §e<alias>§f   | Alias of group to reject invite from" +
                                 "\n§b----------------------------------------------------------§f";
-                    case "invite":
-                        return "   §b----------------------- §e(Help | Invite)§b -----------------------§f" +
+                    case "invite" -> "   §b----------------------- §e(Help | Invite)§b -----------------------§f" +
                                 "\n> §ecreate <name> <alias> <colour>§f" +
                                 "\n   > §e<name>§f    | Name of new group" +
                                 "\n   > §e<alias>§f   | Alias of new group" +
@@ -83,20 +65,16 @@ public class CGroupCmdParse implements CommandExecutor {
                                 "\n   > §e<alias>§f   | Alias of group to remove member from" +
                                 "\n   > §e<member>§f  | Name of member to remove from group" +
                                 "\n§b----------------------------------------------------------§f";
-                    case "channel":
-                        return "§b---------------------- §e(Help | Channel)§b ----------------------§f" +
+                    case "channel" -> "§b---------------------- §e(Help | Channel)§b ----------------------§f" +
                                 "\n> §fchannel <alias>" +
                                 "\n   > §e<alias>§f   | Alias of group to start speaking in. If group with given alias does not exist, you will be sent to §eGlobal§f chat" +
                                 "\n§b----------------------------------------------------------§f";
-                    default:
-                        break;
-                }
-                return "§e(Help) §eCGroup V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() +
-                        "\n§e(Help)§f /cgroup [group | invite | channel]§f" +
-                        "\n§e(Help)§f Use §7/cgroup help [group| invite | channel]§f to get more info";
+                    default -> "§e(Help) §eCGroup V" + Bukkit.getPluginManager().getPlugin("CX").getDescription().getVersion() +
+                            "\n§e(Help)§f /cgroup [group | invite | channel]§f" +
+                            "\n§e(Help)§f Use §7/cgroup help [group| invite | channel]§f to get more info";
+                };
             }
-            default:
-                return "§c(Error)§f Too many arguments";
+            default: return "§c(Error)§f Too many arguments";
         }
     }
 }

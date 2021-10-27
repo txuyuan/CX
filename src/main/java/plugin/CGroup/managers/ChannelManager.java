@@ -13,9 +13,7 @@ import java.io.IOException;
 public class ChannelManager {
     public static String switchChannel(Player player, String[] args) {
         switch (args.length) {
-            case 1: {
-                return "§c(Error)§f Please specify a channel\n§3(Info)§f §3Do §7/cgroup help§f for a list of commands and syntax";
-            }
+            case 1: return "§c(Error)§f Please specify a channel\n§3(Info)§f §3Do §7/cgroup help§f for a list of commands and syntax";
             case 2: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
                 FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
@@ -45,8 +43,9 @@ public class ChannelManager {
                 }
                 return "§c(Error)§f You are not a member of §f§o" + group.getFormattedName() + "\n§b(Status)§f Now messaging in §eGlobal";
             }
-            default:
-                return "§c(Error)§f Too many arguments specified\n§3(Info)§f Do §7/cgroup help§f for a list of commands and syntax";
+            default: return "§c(Error)§f Too many arguments specified\n§3(Info)§f Do §7/cgroup help§f for a list of commands and syntax";
         }
     }
+
+
 }

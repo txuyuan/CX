@@ -31,8 +31,8 @@ public class ChatFormatListener implements Listener {
                     (group -> group.getInvites().contains(player.getUniqueId().toString())).map(group -> group.getAlias()).collect(Collectors.toList());
             for (String groupAli : invites) {
                 Group inviteGroup = Group.getGroup(groupAli, data);
-                player.sendMessage("§e(Info)§f You have been invited to join " + inviteGroup.getFormattedName() + " by §e" + Bukkit.getOfflinePlayer(UUID.fromString(inviteGroup.getOwner())).getName()
-                        + "\n§f§e(Info)§f Use §7/cgroup invite accept " + inviteGroup.getAlias() + "§f to accept invitation");
+                player.sendMessage("§3(Info)§f You have been invited to join " + inviteGroup.getFormattedName() + " by §e" + Bukkit.getOfflinePlayer(UUID.fromString(inviteGroup.getOwner())).getName()
+                        + "\n§f§3(Info)§f Use §7/cgroup invite accept " + inviteGroup.getAlias() + "§f to accept invitation");
             }
         }
 
@@ -40,7 +40,7 @@ public class ChatFormatListener implements Listener {
             String search = "players." + player.getUniqueId() + ".disList";
             List<String> disList = (List<String>) data.getList("players." + player.getUniqueId() + ".disList");
             for (String dis : disList) {
-                player.sendMessage("§e(Info)§f The group §e" + dis + "§f (which you were a part of) was disbanded");
+                player.sendMessage("§3(Info)§f The group §e" + dis + "§f (which you were a part of) was disbanded");
             }
             data.set(search, null);
             try {
@@ -56,7 +56,7 @@ public class ChatFormatListener implements Listener {
             List<String> leavList = (List<String>) data.getList("players." + player.getUniqueId() + ".leaveList");
             for (String leav : leavList) {
                 List<String> leavs = Arrays.asList(leav.split("`"));
-                player.sendMessage("§e(Info)§f Player §e" + leavs.get(0) + "§f left the group §e" + leavs.get(1));
+                player.sendMessage("§3(Info)§f Player §e" + leavs.get(0) + "§f left the group §e" + leavs.get(1));
             }
             data.set(search, null);
             try {
@@ -72,7 +72,7 @@ public class ChatFormatListener implements Listener {
             List<String> transList = (List<String>) data.getList("players." + player.getUniqueId() + ".transList");
             for (String trans : transList) {
                 List<String> transInfo = Arrays.asList(trans.split("`"));
-                player.sendMessage("§e(Info)§f Ownership of grooup §e" + transInfo.get(1) + "§f has been transferred to player §e" + transInfo.get(0));
+                player.sendMessage("§3(Info)§f Ownership of grooup §e" + transInfo.get(1) + "§f has been transferred to player §e" + transInfo.get(0));
             }
             data.set(search, null);
             try {
@@ -108,7 +108,7 @@ public class ChatFormatListener implements Listener {
                     Main.logDiskError(exception);
                     player.sendMessage("§c(Error)§f Error writing to disk");
                 }
-                player.sendMessage("§9(Info)§f The channel you were in was deleted\n§b(Status)§f Now messaging in §eGlobal");
+                player.sendMessage("§3(Info)§f The channel you were in was deleted\n§b(Status)§f Now messaging in §eGlobal");
                 event.setCancelled(true);
             } else if (!group.getMembers().contains(player.getUniqueId().toString())) {
                 channel = "§6§oALL§r";
@@ -120,7 +120,7 @@ public class ChatFormatListener implements Listener {
                     Main.logDiskError(exception);
                     player.sendMessage("§c(Error)§f Error writing to disk");
                 }
-                player.sendMessage("§9(Info)§f The channel you were in was deleted, or you were removed\n§b(Status)§f Now messaging in §eGlobal");
+                player.sendMessage("§3(Info)§f The channel you were in was deleted, or you were removed\n§b(Status)§f Now messaging in §eGlobal");
                 event.setCancelled(true);
             } else {
                 channel = group.getFormattedAlias();

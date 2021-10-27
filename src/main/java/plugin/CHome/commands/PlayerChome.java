@@ -162,16 +162,12 @@ public class PlayerChome {
         HOME, DEATH, SHOP;
 
         public String toString() {
-            switch (this) {
-                case HOME:
-                    return "your home";
-                case DEATH:
-                    return "your last death point";
-                case SHOP:
-                    return "the shopping district";
-                default:
-                    return null;
-            }
+            return switch(this) {
+                case HOME -> "your home";
+                case DEATH -> "your last death point";
+                case SHOP -> "the shopping district";
+                default -> null;
+            };
         }
     }
 

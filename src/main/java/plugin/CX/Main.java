@@ -45,6 +45,8 @@ public class Main extends JavaPlugin {
         if (isDebug) logInfo("§aTest: " + msg);
     }
 
+
+
     public void onEnable() {
         getDataFolder().mkdir();
 

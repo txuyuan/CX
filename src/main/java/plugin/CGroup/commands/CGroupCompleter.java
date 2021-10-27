@@ -29,28 +29,13 @@ public class CGroupCompleter implements TabCompleter {
         if (args.length == 1)
             completions = Arrays.asList("channel", "group", "help", "invite");
         else {
-            switch (args[0]) {
-                case "channel": {
-                    completions = this.channelComplete(args, playerUUID, data);
-                    break;
-                }
-                case "group": {
-                    completions = this.groupComplete(args, playerUUID, data);
-                    break;
-                }
-                case "invite": {
-                    completions = this.inviteComplete(args, playerUUID, data);
-                    break;
-                }
-                case "help": {
-                    completions = Arrays.asList("group", "invite", "channel");
-                    break;
-                }
-                default: {
-                    completions = Arrays.asList("");
-                    break;
-                }
-            }
+            completions = switch(args[0]){
+                case "channel" -> channelComplete(args, playerUUID, data);
+                case "group" -> groupComplete(args, playerUUID, data);
+                case "invite" -> inviteComplete(args, playerUUID, data);
+                case "help" -> Arrays.asList("group", "invite", "channel");
+                default -> Arrays.asList();
+            };
         }
 
         return completions.stream().filter(

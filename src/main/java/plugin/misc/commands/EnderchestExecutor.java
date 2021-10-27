@@ -35,7 +35,7 @@ public class EnderchestExecutor implements CommandExecutor {
             Player player = (Player) commandSender;
             player.openInventory(target.getEnderChest());
         } else {
-            commandSender.sendMessage("§9(Info)§f §7" + args[0] + "§f has this following enderchest: " + InvToString.toString(target.getEnderChest()));
+            commandSender.sendMessage("§3(Info)§f §7" + args[0] + "§f has this following enderchest: " + InvToString.toString(target.getEnderChest()));
         }
         return true;
     }

@@ -19,30 +19,20 @@ public class GroupManager {
     public static String parseGroup(Player sender, String[] args) {
         if (args.length < 2)
             return "§c(Error)§f Please specify an action\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
-        String s;
-        switch (s = args[1]) {
-            case "create":
-                return createGroup(sender, args);
-            case "remove":
-                return removeMember(sender, args);
-            case "info":
-                return groupInfo(args);
-            case "leave":
-                return leaveGroup(sender, args);
-            case "transfer":
-                return transferOwnership(sender, args);
-            case "disband":
-                return disbandGroup(sender, args);
-            default:
-                break;
-        }
-        return "§c(Error)§f \"" + args[1] + "\" is not a valid argument" + "\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
+        return switch (args[1]) {
+            case "create" -> createGroup(sender, args);
+            case "remove" -> removeMember(sender, args);
+            case "info" -> groupInfo(args);
+            case "leave" -> leaveGroup(sender, args);
+            case "transfer" -> transferOwnership(sender, args);
+            case "disband" -> disbandGroup(sender, args);
+            default -> "§c(Error)§f Invalid argument: " + args[0];
+        };
     }
 
     private static String groupInfo(String[] args) {
         switch (args.length) {
-            case 2:
-                return "§c(Error)§f Please specify a group (by alias)\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
+            case 2: return "§c(Error)§f Please specify a group (by alias)\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
             case 3: {
                 FileConfiguration data = YamlConfiguration.loadConfiguration(new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml"));
                 Group group = Group.getGroup(args[2], data);
@@ -54,11 +44,11 @@ public class GroupManager {
                     for (int i = 0; i < members.size(); ++i) {
                         UUID memberUUID = UUID.fromString(members.get(i));
                         OfflinePlayer offlineMember = Bukkit.getOfflinePlayer(memberUUID);
-                        info = info + "\n> §e" + offlineMember.getName() + "§f";
+                        info.concat("\n> §e" + offlineMember.getName() + "§f");
                     }
                 } else
-                    info = info + "\n> §cNONE§f";
-                info = info + "\n§aInvites§f: ";
+                    info.concat("\n> §cNONE§f");
+                info.concat("\n§aInvites§f: ");
                 ArrayList<String> invites = group.getInvites();
                 if (invites.size() > 0) {
                     for (int j = 0; j < invites.size(); ++j) {
@@ -67,23 +57,19 @@ public class GroupManager {
                         info = info + "\n> §e" + offlineInvitee.getName() + "§f";
                     }
                 } else
-                    info = info + "\n> §cNONE§f";
-                info = info + "\n§f-----------------------------";
+                    info.concat("\n> §cNONE§f");
+                info.concat("\n§f-----------------------------");
                 return info;
             }
-            default:
-                return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
+            default: return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
         }
     }
 
     private static String createGroup(Player sender, String[] args) {
         switch (args.length) {
-            case 2:
-                return "§c(Error)§f Please specify the group name\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
-            case 3:
-                return "§c(Error)§f Please specify an alias\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
-            case 4:
-                return "§c(Error)§f Please choose a group colour\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
+            case 2: return "§c(Error)§f Please specify the group name\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
+            case 3: return "§c(Error)§f Please specify an alias\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
+            case 4: return "§c(Error)§f Please choose a group colour\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
             case 5: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
                 FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
@@ -97,12 +83,9 @@ public class GroupManager {
                 if (args[2].contains("`"))
                     return "§c(Error)§f The character §f§n`§c is reserved";
                 switch (group.setAlias(args[3], data)) {
-                    case 1:
-                        return "§c(Error)§f The alias must be 3 characters long";
-                    case 2:
-                        return "§c(Error)§f The alias §e" + args[3] + "§c has been taken";
-                    case 3:
-                        return "§c(Error)§f The alias §n§oALL §cis reserved for global chat";
+                    case 1: return "§c(Error)§f The alias must be 3 characters long";
+                    case 2: return "§c(Error)§f The alias §e" + args[3] + "§c has been taken";
+                    case 3: return "§c(Error)§f The alias §n§oALL §cis reserved for global chat";
                     default: {
                         if (!group.setColour(args[4]))
                             return "§c(Error)§f The colour §f" + args[4] + " is invalid";
@@ -117,15 +100,13 @@ public class GroupManager {
                     }
                 }
             }
-            default:
-                return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
+            default: return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help§f for a list of commands and syntax";
         }
     }
 
     private static String disbandGroup(Player sender, String[] args) {
         switch (args.length) {
-            case 2:
-                return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            case 2: return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 3: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
                 FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
@@ -166,15 +147,13 @@ public class GroupManager {
 
                 return "§b(Status) You disbanded " + group.getFormattedName() + ", affecting §6" + group.getMembers().size() + " player(s)";
             }
-            default:
-                return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            default: return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
         }
     }
 
     private static String leaveGroup(Player sender, String[] args) {
         switch (args.length) {
-            case 2:
-                return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            case 2: return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 3: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
                 FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
@@ -197,8 +176,7 @@ public class GroupManager {
                     if (data.getList("players." + playerUUID + ".leaveList") != null) {
                         leaveList = (List<String>) data.getList("players." + playerUUID + ".leaveList");
                         leaveList.add(dats);
-                    } else
-                        leaveList = Arrays.asList(dats);
+                    } else leaveList = Arrays.asList(dats);
                     try {
                         data.save(dataFile);
                     } catch (IOException exception) {
@@ -216,10 +194,8 @@ public class GroupManager {
 
     private static String removeMember(Player sender, String[] args) {
         switch (args.length) {
-            case 2:
-                return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
-            case 3:
-                return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            case 2: return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            case 3: return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 4: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
                 FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
@@ -256,17 +232,14 @@ public class GroupManager {
                 }
                 return "§b(Status) You removed §e" + removedMemberName + " from " + group.getFormattedName();
             }
-            default:
-                return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            default: return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
         }
     }
 
     private static String transferOwnership(Player sender, String[] args) {
         switch (args.length) {
-            case 2:
-                return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
-            case 3:
-                return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            case 2: return "§c(Error)§f Please specify a group\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            case 3: return "§c(Error)§f Please specify a player\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
             case 4: {
                 File dataFile = new File(Bukkit.getPluginManager().getPlugin("CX").getDataFolder(), "groupdata.yml");
                 FileConfiguration data = YamlConfiguration.loadConfiguration(dataFile);
@@ -306,8 +279,7 @@ public class GroupManager {
 
                 return "§b(Status) You tranferred ownership of §e" + group.getFormattedName() + " to §e" + transferredOwnerName;
             }
-            default:
-                return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
+            default: return "§c(Error)§f Too many arguments specified\n§e(Help)§f Do §7/cgroup help §ffor a list of commands and syntax";
         }
     }
 }
