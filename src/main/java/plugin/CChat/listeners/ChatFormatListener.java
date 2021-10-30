@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import plugin.CGroup.types.Group;
 import plugin.CX.Main;
 
@@ -137,10 +138,18 @@ public class ChatFormatListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        Main.logInfo(player.getDisplayName() + " logged in at" + player.getLocation());
-        event.setJoinMessage("§a(Join)§6 " + player.getDisplayName() + "§f joined the game");
-        notifs(event, player);
+        event.setJoinMessage("");
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                Player player = event.getPlayer();
+                String msg = player.getDisplayName() + " logged in at" + player.getLocation();
+                Main.logInfo(msg);
+                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(msg));
+                notifs(event, player);
+            }
+        }.runTaskLater(Main.getInstance(), 1);
+
     }
 
     @EventHandler
