@@ -13,9 +13,9 @@ import plugin.CGroup.commands.CGroupCompleter;
 import plugin.CGroup.commands.CchCompleter;
 import plugin.CGroup.commands.CchParse;
 import plugin.CGroup.types.Group;
-import plugin.CHome.commands.CHomeTabCompleter;
-import plugin.CHome.commands.ChomeManager;
-import plugin.CHome.listeners.DeathPointListener;
+import plugin.CHome.commands.ChomeExec;
+import plugin.CHome.commands.ChomeTabCompleter;
+import plugin.CHome.listeners.DeathListener;
 import plugin.CMenu.CMenuExec;
 import plugin.CMenu.MenuListListener;
 import plugin.misc.MiscManager;
@@ -60,9 +60,9 @@ public class Main extends JavaPlugin {
         getCommand("cch").setTabCompleter(new CchCompleter());
         ConfigurationSerialization.registerClass(Group.class, "Group");
 
-        getCommand("chome").setExecutor(new ChomeManager());
-        getCommand("chome").setTabCompleter(new CHomeTabCompleter());
-        getServer().getPluginManager().registerEvents(new DeathPointListener(), this);
+        getCommand("chome").setExecutor(new ChomeExec());
+        getCommand("chome").setTabCompleter(new ChomeTabCompleter());
+        getServer().getPluginManager().registerEvents(new DeathListener(), this);
 
         getCommand("cmenu").setExecutor(new CMenuExec());
         getServer().getPluginManager().registerEvents(new MenuListListener(), this);
@@ -75,7 +75,7 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        HandlerList.unregisterAll(new DeathPointListener());
+        HandlerList.unregisterAll(new DeathListener());
         HandlerList.unregisterAll(new ChatFormatListener());
         HandlerList.unregisterAll(new MenuListListener());
         HandlerList.unregisterAll(new SpectatorTPListener());

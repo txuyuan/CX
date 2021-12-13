@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 import plugin.CX.Main;
-import plugin.data.PluginFile;
+import plugin.Data.PluginFile;
 
 import java.util.ArrayList;
 import java.util.Iterator;
