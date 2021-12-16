@@ -1,6 +1,7 @@
 package plugin.CChat.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -29,7 +30,7 @@ public class ChatFormatListener implements Listener {
 
         if (data.getConfigurationSection("groups") != null) {
             List<String> invites = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter
-                    (group -> group.getInvites().contains(player.getUniqueId().toString())).map(group -> group.getAlias()).collect(Collectors.toList());
+                    (group -> group.getInvites().contains(player.getUniqueId().toString())).map(group -> group.getAlias()).toList();
             for (String groupAli : invites) {
                 Group inviteGroup = Group.getGroup(groupAli, data);
                 player.sendMessage("§3(Info)§f You have been invited to join " + inviteGroup.getFormattedName() + " by §e" + Bukkit.getOfflinePlayer(UUID.fromString(inviteGroup.getOwner())).getName()
@@ -133,7 +134,7 @@ public class ChatFormatListener implements Listener {
 
         event.setMessage(event.getMessage().replace("&", "§").replace("\\&", "&"));
 
-        event.setFormat("(" + channel + "§f | " + (player.hasPermission("cx.opName") ? "§c" : "§a") + player.getDisplayName() + "§f) " + event.getMessage());
+        event.setFormat("(" + channel + "§f | " + player.getDisplayName() + "§f) " + event.getMessage());
     }
 
     @EventHandler
@@ -143,9 +144,11 @@ public class ChatFormatListener implements Listener {
             @Override
             public void run() {
                 Player player = event.getPlayer();
-                String msg = player.getDisplayName() + " logged in at" + player.getLocation();
+                String msg = player.getDisplayName() + "§r logged in at " + getLocationDesc(player.getLocation());
                 Main.logInfo(msg);
-                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(msg));
+
+                String playerMsg = "§a(Join)§6 " + player.getDisplayName() + "§f joined the game";
+                Bukkit.getOnlinePlayers().forEach(onlinePlayer -> onlinePlayer.sendMessage(playerMsg));
                 notifs(event, player);
             }
         }.runTaskLater(Main.getInstance(), 1);
@@ -155,7 +158,14 @@ public class ChatFormatListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
-        Main.logInfo(player.getDisplayName() + " logged out at" + player.getLocation());
+        Main.logInfo(player.getDisplayName() + "§r logged out at" + getLocationDesc(player.getLocation()));
         event.setQuitMessage("§a(Leave)§6 " + player.getDisplayName() + "§f left the game");
+    }
+
+
+
+    private String getLocationDesc(Location loc){
+        String msg = "§nx: " + loc.getBlockX() + ", y: " + loc.getBlockY() + ", z: " + loc.getBlockZ() + "§f in world: §n" + loc.getWorld().getName();
+        return msg;
     }
 }
