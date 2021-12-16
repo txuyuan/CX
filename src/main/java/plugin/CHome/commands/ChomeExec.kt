@@ -1,5 +1,6 @@
 package plugin.CHome.commands
 
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -12,6 +13,7 @@ class ChomeExec: CommandExecutor{
         if(args.size < 1){
             sender.sendMessage("§c(Error)§f No arguments specified")
             sender.sendMessage(chomeHelpMsg(sender.hasPermission("chome.admin")))
+            return true
         }
 
         if(sender is Player){
@@ -26,10 +28,13 @@ class ChomeExec: CommandExecutor{
 }
 
 fun chomeHelpMsg(isOp: Boolean): String {
+
     return """
-            §e(Help)§7 /chome sethome §f: Set your home${if (isOp) "\n§e(Help)§7 /chome home <target>§f: Teleport to target's home \n         (leave blank for own home)" else "\n§e(Help)§7 /chome home§f: Teleport to your home"}
-            §e(Help)§7 /chome death §f: Teleport to your last death location
-            §e(Help)§7 /chome shop §f: Teleport to shopping district${if (isOp) "\n§e(Help)§7 /chome setshop §f Set location of shopping district" else ""}
-            §e(Help)§7 /chome help §f: Show this help message
-            """.trimIndent()
+§e(Help)§f §b§lCX v${Bukkit.getPluginManager().getPlugin("CX")!!.description.version}§f
+> §esethome§f
+${if (isOp) "> §ehome <target>§f" else "> §ehome§f"}
+> §edeath§f
+> §eshop§f
+${if (isOp) "§e<setshop>§f" else ""} """.trimIndent()
+
 }

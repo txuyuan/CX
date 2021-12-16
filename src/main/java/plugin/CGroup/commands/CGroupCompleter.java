@@ -13,7 +13,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class CGroupCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
@@ -40,7 +39,7 @@ public class CGroupCompleter implements TabCompleter {
 
         return completions.stream().filter(
                         argument -> argument.toLowerCase().indexOf(args[args.length - 1].toLowerCase()) == 0)
-                .sorted().collect(Collectors.toList());
+                .sorted().toList();
     }
 
 
@@ -53,7 +52,7 @@ public class CGroupCompleter implements TabCompleter {
         List<String> completions;
         if (args.length == 2) {
             if (data.getConfigurationSection("groups") != null) {
-                completions = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).map(group -> group.getAlias()).collect(Collectors.toList());
+                completions = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).map(group -> group.getAlias()).toList();
                 completions.add("ALL");
             } else
                 completions = Arrays.asList("ALL");
@@ -68,17 +67,17 @@ public class CGroupCompleter implements TabCompleter {
             completions = Arrays.asList("create", "disband", "leave", "remove", "transfer", "info");
         } else if (args.length == 3) {
             if (args[1].equals("disband") || args[1].equals("remove") || args[1].equals("transfer"))
-                completions = data.getConfigurationSection("groups") != null ? data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter(group -> group.ownedBy(player)).map(group -> group.getAlias()).collect(Collectors.toList()) : Arrays.asList(new String[0]);
+                completions = data.getConfigurationSection("groups") != null ? data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter(group -> group.ownedBy(player)).map(group -> group.getAlias()).toList() : Arrays.asList(new String[0]);
             else if (args[1].equals("leave"))
-                completions = data.getConfigurationSection("groups") != null ? data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter(group -> group.getMembers().contains(player)).filter(group -> group.ownedBy(player) == false).map(group -> group.getAlias()).collect(Collectors.toList()) : Arrays.asList(new String[0]);
+                completions = data.getConfigurationSection("groups") != null ? data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter(group -> group.getMembers().contains(player)).filter(group -> group.ownedBy(player) == false).map(group -> group.getAlias()).toList() : Arrays.asList(new String[0]);
             else if (args[1].equals("info")) {
-                completions = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).map(group -> group.getAlias()).collect(Collectors.toList());
+                completions = data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).map(group -> group.getAlias()).toList();
                 completions.add("ALL");
             } else
                 completions = Arrays.asList("");
         } else {
             Group group2;
-            completions = args.length == 4 && (args[1].equals("remove") || args[1].equals("transfer")) ? ((group2 = data.getObject("groups." + args[2], Group.class)) != null && group2.ownedBy(player).booleanValue() ? (data.getConfigurationSection("groups") != null ? group2.getMembers().stream().filter(member -> !member.equals(group2.getOwner())).map(UUID::fromString).map(Bukkit::getOfflinePlayer).map(member -> member.getName()).collect(Collectors.toList()) : Arrays.asList(new String[0])) : Arrays.asList(new String[0])) : (args.length == 5 && args[1].equals("create") ? Arrays.asList("black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white") : Arrays.asList(new String[0]));
+            completions = args.length == 4 && (args[1].equals("remove") || args[1].equals("transfer")) ? ((group2 = data.getObject("groups." + args[2], Group.class)) != null && group2.ownedBy(player).booleanValue() ? (data.getConfigurationSection("groups") != null ? group2.getMembers().stream().filter(member -> !member.equals(group2.getOwner())).map(UUID::fromString).map(Bukkit::getOfflinePlayer).map(member -> member.getName()).toList() : Arrays.asList(new String[0])) : Arrays.asList(new String[0])) : (args.length == 5 && args[1].equals("create") ? Arrays.asList("black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "dark_purple", "gold", "gray", "dark_gray", "blue", "green", "aqua", "red", "light_purple", "yellow", "white") : Arrays.asList(new String[0]));
         }
         return completions;
     }
@@ -87,7 +86,7 @@ public class CGroupCompleter implements TabCompleter {
         Group group2;
         List<String> completions = args.length == 2 ? Arrays.asList("accept", "reject", "revoke", "send") : (args.length == 3 ? (args[1].equals("revoke") || args[1].equals("send") ? (data.getConfigurationSection("groups") != null ?
                 data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter
-                        (group -> group.ownedBy(player)).map(group -> group.getAlias()).collect(Collectors.toList()) : Arrays.asList(new String[0])) : (args[1].equals("accept") || args[1].equals("reject") ? (data.getConfigurationSection("groups") != null ? data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter(group -> group.getInvites().contains(player)).map(group -> group.getAlias()).collect(Collectors.toList()) : Arrays.asList(new String[0])) : Arrays.asList(new String[0]))) : (args.length == 4 ? ((group2 = data.getObject("groups." + args[2], Group.class)) != null && group2.ownedBy(player).booleanValue() ? (args[1].equals("send") ? (data.getConfigurationSection("groups") != null ? Bukkit.getOnlinePlayers().stream().filter(onlinePlayer -> !onlinePlayer.getUniqueId().toString().equals(player) && !group2.getInvites().contains(onlinePlayer.getUniqueId().toString()) && !group2.getMembers().contains(onlinePlayer.getUniqueId().toString())).map(onlinePlayer -> onlinePlayer.getName()).collect(Collectors.toList()) : Arrays.asList(new String[0])) : (args[1].equals("revoke") ? (data.getConfigurationSection("groups") != null ? group2.getInvites().stream().map(UUID::fromString).map(Bukkit::getOfflinePlayer).map(invitedPlayer -> invitedPlayer.getName()).collect(Collectors.toList()) : Arrays.asList(new String[0])) : Arrays.asList(new String[0]))) : Arrays.asList(new String[0])) : Arrays.asList(new String[0])));
+                        (group -> group.ownedBy(player)).map(group -> group.getAlias()).toList() : Arrays.asList(new String[0])) : (args[1].equals("accept") || args[1].equals("reject") ? (data.getConfigurationSection("groups") != null ? data.getConfigurationSection("groups").getKeys(false).stream().map(key -> data.getObject("groups." + key, Group.class)).filter(group -> group.getInvites().contains(player)).map(group -> group.getAlias()).toList() : Arrays.asList(new String[0])) : Arrays.asList(new String[0]))) : (args.length == 4 ? ((group2 = data.getObject("groups." + args[2], Group.class)) != null && group2.ownedBy(player).booleanValue() ? (args[1].equals("send") ? (data.getConfigurationSection("groups") != null ? Bukkit.getOnlinePlayers().stream().filter(onlinePlayer -> !onlinePlayer.getUniqueId().toString().equals(player) && !group2.getInvites().contains(onlinePlayer.getUniqueId().toString()) && !group2.getMembers().contains(onlinePlayer.getUniqueId().toString())).map(onlinePlayer -> onlinePlayer.getName()).toList() : Arrays.asList(new String[0])) : (args[1].equals("revoke") ? (data.getConfigurationSection("groups") != null ? group2.getInvites().stream().map(UUID::fromString).map(Bukkit::getOfflinePlayer).map(invitedPlayer -> invitedPlayer.getName()).toList() : Arrays.asList(new String[0])) : Arrays.asList(new String[0]))) : Arrays.asList(new String[0])) : Arrays.asList(new String[0])));
         return completions;
     }
 }

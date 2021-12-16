@@ -22,6 +22,10 @@ object ChomePlayer {
 
     fun exec(player: Player, args: Array<out String>) : String{
         file = File("./plugins/CX/chomedata.yml")
+        if(!file.exists()) {
+            file.createNewFile()
+            file = File("./plugins/CX/chomedata.yml")
+        }
         fileC = YamlConfiguration.loadConfiguration( File("./plugins/CX/chomedata.yml") )
 
         return when(args.get(0).lowercase()){
@@ -86,7 +90,7 @@ object ChomePlayer {
 
     fun tpChome(player: Player, destination: Destination): String{
         val permError = checkPermission(player, "chome.${destination.toLabel()}")
-        if(permError.isNullOrEmpty()) return permError as String
+        if(!permError.isNullOrEmpty()) return permError as String
 
         val loc = getLocation(destination.toPath(player.uniqueId)) ?: return "§c(Error)§f ${destination.toString().replaceFirstChar { it.uppercase() }} does not exist"
 
@@ -96,7 +100,7 @@ object ChomePlayer {
 
     fun setHomeShop(player: Player, destination: Destination): String {
         val permError = checkPermission(player, "chome.set${destination.toLabel()}")
-        if(permError.isNullOrEmpty()) return permError as String
+        if(!permError.isNullOrEmpty()) return permError
 
         if(saveLocation(player.getLocation(), destination, player))
             return "§b(Status)§f Successfully set $destination"
@@ -116,7 +120,7 @@ object ChomePlayer {
     }
 
     private fun teleport(player: Player, location: Location, destination: Destination?, destinationName: String = "placeholder"): String{
-        if(!isAdmin(player)){
+        if(isAdmin(player)){
             player.teleport(location)
             return "§b(Status)§f Teleporting to $destination"
         }
@@ -126,13 +130,17 @@ object ChomePlayer {
         var countUp = 1
         object: BukkitRunnable(){
             override fun run() {
-                if(countUp==4) this.cancel()
                 if(countUp==3) player.teleport(location)
 
                 val colour = if(countUp==3) "e" else "b"
-                player.sendTitle("§$colour§l${">".repeat(countUp)} §8§lTeleporting... §$colour§l${"<".repeat(countUp)} ", "§b§oYou can move")
+                val fadeIn = if(countUp==1) 10 else 0
+                val fadeOut = if(countUp==3) 10 else 0
+                player.sendTitle("§$colour§l${">".repeat(countUp)} §f§lTeleporting... §$colour§l${"<".repeat(countUp)} ", "§b§oYou can move :)", fadeIn, 20, fadeOut)
+
+                if(countUp==3) this.cancel()
+                countUp++
             }
-        }.runTaskTimer(Main.getInstance(), 0, 1)
+        }.runTaskTimer(Main.getInstance(), 1, 20)
         val destinationDisplay =
                 if(destination!=null) destination
                 else destinationName
@@ -144,11 +152,11 @@ object ChomePlayer {
         val path = "${destination.toPath(player.uniqueId)}"
         fileC[path!!] = location
         try {
-            return true
             fileC.save(file)
+            return true
         } catch (exception: IOException) {
-            return false
             Main.logDiskError(exception)
+            return false
         }
     }
     fun getLocation(path: String?): Location? {
