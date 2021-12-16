@@ -133,7 +133,7 @@ object ChomePlayer {
                 if(countUp==3) player.teleport(location)
 
                 val colour = if(countUp==3) "e" else "b"
-                val fadeIn = if(countUp==1) 10 else 0
+                val fadeIn = if(countUp==0) 10 else 0
                 val fadeOut = if(countUp==3) 10 else 0
                 player.sendTitle("§$colour§l${">".repeat(countUp)} §f§lTeleporting... §$colour§l${"<".repeat(countUp)} ", "§b§oYou can move :)", fadeIn, 20, fadeOut)
 
