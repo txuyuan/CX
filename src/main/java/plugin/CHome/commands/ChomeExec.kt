@@ -16,6 +16,7 @@ class ChomeExec: CommandExecutor{
             return true
         }
 
+
         if(sender is Player){
             val player = sender as Player
             sender.sendMessage(ChomePlayer.exec(player, args))
@@ -29,8 +30,7 @@ class ChomeExec: CommandExecutor{
 
 fun chomeHelpMsg(isOp: Boolean): String {
 
-    return """
-§e(Help)§f §b§lCX v${Bukkit.getPluginManager().getPlugin("CX")!!.description.version}§f
+    return """§e(Help)§f §b§lCX v${Bukkit.getPluginManager().getPlugin("CX")!!.description.version}§f
 > §esethome§f
 ${if (isOp) "> §ehome <target>§f" else "> §ehome§f"}
 > §edeath§f
