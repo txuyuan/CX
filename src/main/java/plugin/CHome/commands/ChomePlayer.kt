@@ -33,7 +33,7 @@ object ChomePlayer {
             "setshop" -> setHomeShop(player, Destination.SHOP)
             "home" -> tpHome(player, args)
             "shop" -> tpChome(player, Destination.SHOP)
-            "death" -> tpChome(player, Destination.DEATH)
+            "death" -> tpDeath(player, args)
             "help" -> chomeHelpMsg(isAdmin(player))
             else -> "§c(Error)§f Unrecognised argument ${args.get(0)} \n ${chomeHelpMsg(false)}"
         }
@@ -43,27 +43,27 @@ object ChomePlayer {
 
     fun setDeath(event: PlayerDeathEvent){
         val player = event.player
-        setDeathUsed(player, true)
+        setDeathUsed(player, false)
         saveLocation(player.location, Destination.DEATH, player)
+        Main.logInfo("${player.name} has died at ${getLocationDesc(player.location)}")
     }
     private fun setDeathUsed(player: Player, used: Boolean): Boolean{
         fileC.set("${player.uniqueId}.death-used", used)
         try {
-            return true
             fileC.save(file)
+            return true
         } catch (exception: IOException) {
-            return false
             Main.logDiskError(exception)
+            return false
         }
     }
 
-
     fun tpDeath(player: Player, args: Array<out String>): String{
         if(fileC.getBoolean("${player.uniqueId}.death-used"))
-            return "§c(Error)§f You can only teleport to your home once"
-        val msg = tpChome(player, Destination.DEATH)
+            return "§c(Error)§f You can only teleport to your grave once"
         return tpChome(player, Destination.DEATH)
     }
+
 
     fun tpHome(player: Player, args: Array<out String>) : String{
         if(isAdmin(player) && args.size > 1) return infoHome(player, args)
@@ -94,7 +94,6 @@ object ChomePlayer {
 
         val loc = getLocation(destination.toPath(player.uniqueId)) ?: return "§c(Error)§f ${destination.toString().replaceFirstChar { it.uppercase() }} does not exist"
 
-        if(destination==Destination.DEATH) setDeathUsed(player, true)
         return teleport(player, loc, destination)
     }
 
@@ -124,6 +123,7 @@ object ChomePlayer {
             player.teleport(location)
             return "§b(Status)§f Teleporting to $destination"
         }
+
         if(destination==Destination.SHOP && player.world != Bukkit.getWorlds()[0])
             return "§c(Error)§f You cannot teleport to the shop while not in the overworld"
 
@@ -133,24 +133,22 @@ object ChomePlayer {
                 if(countUp==3) player.teleport(location)
 
                 val colour = if(countUp==3) "e" else "b"
-                val fadeIn = if(countUp==0) 10 else 0
-                val fadeOut = if(countUp==3) 10 else 0
+                val fadeIn = if(countUp==0) 10 else 2
+                val fadeOut = if(countUp==3) 10 else 2
                 player.sendTitle("§$colour§l${">".repeat(countUp)} §f§lTeleporting... §$colour§l${"<".repeat(countUp)} ", "§b§oYou can move :)", fadeIn, 20, fadeOut)
 
                 if(countUp==3) this.cancel()
                 countUp++
             }
         }.runTaskTimer(Main.getInstance(), 1, 20)
-        val destinationDisplay =
-                if(destination!=null) destination
-                else destinationName
+        if(destination==Destination.DEATH) setDeathUsed(player, true)
 
         return "§b(Status)§f Teleporting to $destination..."
     }
 
     private fun saveLocation(location: Location?, destination: Destination, player: Player): Boolean {
         val path = "${destination.toPath(player.uniqueId)}"
-        fileC[path!!] = location
+        fileC.set(path, location)
         try {
             fileC.save(file)
             return true
@@ -191,4 +189,9 @@ enum class Destination {
             SHOP -> "shop"
         }
     }
+}
+
+
+fun getLocationDesc(location: Location): String {
+    return "§nx: " + location.getBlockX() + ", y: " + location.getBlockY() + ", z: " + location.getBlockZ() + "§f in world: §n" + location.getWorld().getName()
 }

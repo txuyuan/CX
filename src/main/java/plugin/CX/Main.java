@@ -33,11 +33,12 @@ public class Main extends JavaPlugin {
     }
 
     public static void logInfo(String msg) {
-        getInstance().getLogger().log(Level.INFO, msg);
+        getInstance().getLogger().info(msg);
     }
 
     public static void logDiskError(IOException e) {
         getInstance().getLogger().log(Level.SEVERE, "§c(Error)§f Error writing to disk: \n" + e.getStackTrace().toString());
+
     }
 
     public static void logTest(String msg) {
