@@ -8,11 +8,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import plugin.CChat.commands.SayExec;
 import plugin.CChat.listeners.ChatFormatListener;
 import plugin.CChat.listeners.DeathMsgListener;
-import plugin.CGroup.commands.CGroupCmdParse;
-import plugin.CGroup.commands.CGroupCompleter;
-import plugin.CGroup.commands.CchCompleter;
-import plugin.CGroup.commands.CchParse;
-import plugin.CGroup.types.Group;
 import plugin.CHome.commands.ChomeExec;
 import plugin.CHome.commands.ChomeTabCompleter;
 import plugin.CHome.listeners.DeathListener;
@@ -54,12 +49,6 @@ public class Main extends JavaPlugin {
         getCommand("say").setExecutor(new SayExec());
         getServer().getPluginManager().registerEvents(new ChatFormatListener(), this);
         getServer().getPluginManager().registerEvents(new DeathMsgListener(), this);
-
-        getCommand("cgroup").setExecutor(new CGroupCmdParse());
-        getCommand("cgroup").setTabCompleter(new CGroupCompleter());
-        getCommand("cch").setExecutor(new CchParse());
-        getCommand("cch").setTabCompleter(new CchCompleter());
-        ConfigurationSerialization.registerClass(Group.class, "Group");
 
         getCommand("chome").setExecutor(new ChomeExec());
         getCommand("chome").setTabCompleter(new ChomeTabCompleter());

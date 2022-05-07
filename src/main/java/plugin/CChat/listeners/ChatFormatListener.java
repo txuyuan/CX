@@ -17,9 +17,8 @@ public class ChatFormatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
-        event.setMessage(event.getMessage().replace("&","§").replace("\\§","&").replace("%", "\\%"));
-
-        event.setMessage("(§a" + player.getDisplayName() + "§f) " + event.getMessage());
+        event.setMessage(event.getMessage().replace("&","§").replace("\\§","&").replace("%","%%"));
+        event.setFormat("(§a" + player.getDisplayName() + "§f) " + event.getMessage());
     }
 
     @EventHandler
