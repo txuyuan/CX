@@ -7,7 +7,6 @@ A plugin bundle I made for my own use. Just thought I might put it here in case 
 **Contents**
 
 * [CHome](#chome)
-* [CGroup](#cgroup)
 * [CChat](#cchat)
 * [CMenu](#cmenu)
 * [Miscellaneous](#miscallenous)
@@ -43,42 +42,6 @@ Teleportation system for player convenience. Uses 1 player-unique home location 
 `chome.shop` - Teleport to shop
 
 `chome.admin` - Set global shop and access other player's homes
-
-<br></br>
-
-## CGroup
-
-Group chat system for communicating with friends/associates/team members privately without cluttering the global chat.
-Each group has an admin to control the group and its members. I have'nt gotten around to adding all the group-editing
-functions I would like, so if you (the admin) can just access the groupdata.yml in the CX folder and edit it manually.
-It's structure is quite self-explanatory (players are stored as UUIDs) and somewhat adequate until I get around to
-implementing the functions
-
-***Commands***
-
-`cgroup group` - Subcommand covering group administration
-
-* `create <name> <alias> <colour>` - Create a new group
-* `disband <alias>` - Disband a group
-* `remove <alias> <member>` - Remove a member from a group
-* `transfer <alias> <member>` - Transfer ownership of a group
-* `info <alias` - Find primary info of group (owner, members, invites)
-
-`cgroup invite` - Subcommand managing invites
-
-* `send <alias> <invitee>` - Send an invite to a player to join a group
-* `revoke <alias> <invitee>` - Revoke an invite for a player to join a group
-* `accept <alias>` - Accept an invite sent to you
-
-`cgroup channel <alias>` - Switch to speaking in a different group *(Alt alias: /cch)*
-
-`cgroup help` - Provides helpful information (No further args to show general plugin info)
-
-* `channel | group | invite` - Usage info about each subcommand
-
-***Permissions***
-
-`cgroup.use` - Utilise overall CGroup functions
 
 <br></br>
 

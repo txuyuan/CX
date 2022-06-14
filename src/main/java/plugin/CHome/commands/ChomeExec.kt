@@ -16,7 +16,7 @@ class ChomeExec: CommandExecutor{
             return true
         }
 
-
+        
         if(sender is Player){
             val player = sender as Player
             sender.sendMessage(ChomePlayer.exec(player, args))
